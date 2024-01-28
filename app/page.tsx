@@ -18,9 +18,6 @@ export default async function HomePage() {
       <ThreeItemGrid />
       <Suspense>
         <Carousel />
-        <Suspense>
-          <Footer />
-        </Suspense>
       </Suspense>
     </>
   );
