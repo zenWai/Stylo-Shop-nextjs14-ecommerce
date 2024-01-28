@@ -24,6 +24,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+    "@vercel/blob": "^0.19.0",
     "clsx": "^2.1.0",
     "geist": "^1.2.1",
     "next": "14.1.0",

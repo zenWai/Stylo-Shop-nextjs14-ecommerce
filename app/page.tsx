@@ -1,6 +1,7 @@
 import { Carousel } from 'components/carousel';
 import { ThreeItemGrid } from 'components/grid/three-items';
 import { Suspense } from 'react';
+import Video from '../components/hero/video';
 
 export const runtime = 'edge';
 
@@ -14,6 +15,7 @@ export const metadata = {
 export default async function HomePage() {
   return (
     <>
+      <Video fileName={'video.mp4'} />
       <ThreeItemGrid />
       <Suspense>
         <Carousel />
