@@ -1,5 +1,6 @@
 import Navbar from 'components/layout/navbar';
 import { GeistSans } from 'geist/font/sans';
+import { Great_Vibes, WindSong } from 'next/font/google';
 import { ensureStartsWith } from 'lib/utils';
 import { ReactNode, Suspense } from 'react';
 import './globals.css';
@@ -31,10 +32,23 @@ export const metadata = {
     })
 };
 
+const windSong = WindSong({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['500'],
+  variable: '--font-windSong'
+});
+const greatVibes = Great_Vibes({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400'],
+  variable: '--font-greatVibes'
+});
+
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={GeistSans.variable}>
-      <body className="bg-neutral-50 text-black selection:bg-teal-300">
+    <html lang="en" className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}>
+      <body className="bg-customBeige text-black selection:bg-teal-300">
         <Navbar />
         <Suspense>
           <main>{children}</main>
