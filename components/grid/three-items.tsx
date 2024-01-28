@@ -24,6 +24,7 @@ function ThreeItemGridItem({
             size === 'full' ? '(min-width: 768px) 66vw, 100vw' : '(min-width: 768px) 33vw, 100vw'
           }
           priority={priority}
+          loading="lazy"
           alt={item.title}
           label={{
             position: size === 'full' ? 'center' : 'bottom',
@@ -37,10 +38,10 @@ function ThreeItemGridItem({
   );
 }
 
-export async function ThreeItemGrid() {
+export async function ThreeItemGrid({ collection }: { collection: string }) {
   // Collections that start with `hidden-*` are hidden from the search page.
   const homepageItems = await getCollectionProducts({
-    collection: 'hidden-homepage-featured-items'
+    collection: collection
   });
 
   if (!homepageItems[0] || !homepageItems[1] || !homepageItems[2]) return null;
@@ -49,8 +50,8 @@ export async function ThreeItemGrid() {
 
   return (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2">
-      <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
-      <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
+      <ThreeItemGridItem size="full" item={firstProduct} priority={false} />
+      <ThreeItemGridItem size="half" item={secondProduct} priority={false} />
       <ThreeItemGridItem size="half" item={thirdProduct} />
     </section>
   );

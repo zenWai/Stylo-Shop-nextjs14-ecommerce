@@ -1,9 +1,10 @@
 'use client';
 
+import SkeletonSearchInput from '@/components/skeletons/search-input';
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, Suspense, useEffect, useState } from 'react';
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Menu } from 'lib/shopify/types';
@@ -61,7 +62,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-[-100%]"
           >
-            <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-white pb-6">
+            <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-customBeige pb-6">
               <div className="p-4">
                 <button
                   className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors"
@@ -72,7 +73,9 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                 </button>
 
                 <div className="mb-4 w-full">
-                  <Search />
+                  <Suspense fallback={<SkeletonSearchInput />}>
+                    <Search />
+                  </Suspense>
                 </div>
                 {menu.length ? (
                   <ul className="flex w-full flex-col">

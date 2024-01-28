@@ -1,0 +1,27 @@
+.swiper-container {
+  position: relative;
+}
+
+.custom-swiper-button-prev,
+.custom-swiper-button-next {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%);
+  z-index: 10; /* Ensure they're above the slides */
+  background-color: rgba(221, 208, 200, 0.8); /* Semi-transparent white */
+  border-radius: 50%; /* Circular shape */
+  padding: 10px;
+}
+
+.custom-swiper-button-prev {
+  left: 10px;
+}
+
+.custom-swiper-button-next {
+  right: 10px;
+}
+
+.custom-swiper-button-prev:hover,
+.custom-swiper-button-next:hover {
+  background-color: rgba(255, 255, 255, 1);
+}

@@ -1,28 +1,14 @@
-'use client';
-
 import clsx from 'clsx';
 import { Menu } from 'lib/shopify/types';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 const FooterMenuItem = ({ item }: { item: Menu }) => {
-  const pathname = usePathname();
-  const [active, setActive] = useState(pathname === item.path);
-
-  useEffect(() => {
-    setActive(pathname === item.path);
-  }, [pathname, item.path]);
-
   return (
     <li>
       <Link
         href={item.path}
         className={clsx(
-          'block p-2 text-lg underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm',
-          {
-            'text-black': active
-          }
+          'block p-2 text-lg text-black underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm'
         )}
       >
         {item.title}
@@ -36,7 +22,7 @@ export default function FooterMenu({ menu }: { menu: Menu[] }) {
 
   return (
     <nav>
-      <ul>
+      <ul className="flex flex-col gap-4 md:flex-row md:gap-8">
         {menu.map((item: Menu) => {
           return <FooterMenuItem key={item.title} item={item} />;
         })}

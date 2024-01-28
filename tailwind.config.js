@@ -6,7 +6,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)']
+        sans: ['var(--font-geist-sans)'],
+        windSong: ['var(--font-windSong)'],
+        greatVibes: ['var(--font-greatVibes)']
+      },
+      colors: {
+        customBeige: 'rgb(221, 208, 200)',
+        blushPink: '#FFD1DC',
+        coralPink: '#F88379'
       },
       keyframes: {
         fadeIn: {
@@ -25,7 +32,6 @@ module.exports = {
       },
       animation: {
         fadeIn: 'fadeIn .3s ease-in-out',
-        carousel: 'marquee 60s linear infinite',
         blink: 'blink 1.4s both infinite'
       }
     }
