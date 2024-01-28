@@ -96,10 +96,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                       );
 
                       return (
-                        <li
-                          key={i}
-                          className="flex w-full flex-col border-b border-neutral-300"
-                        >
+                        <li key={i} className="flex w-full flex-col border-b border-neutral-300">
                           <div className="relative flex w-full flex-row justify-between px-1 py-4">
                             <div className="absolute z-40 -mt-2 ml-[55px]">
                               <DeleteItemButton item={item} />
