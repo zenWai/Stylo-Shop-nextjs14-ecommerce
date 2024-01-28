@@ -32,7 +32,6 @@ module.exports = {
       },
       animation: {
         fadeIn: 'fadeIn .3s ease-in-out',
-        carousel: 'marquee 60s linear infinite',
         blink: 'blink 1.4s both infinite'
       }
     }
