@@ -8,7 +8,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 export default function ProductsCarouselDisplay({ products }: { products: Product[] }) {
   return (
-    <>
+    <section className="py-4">
       <Swiper
         modules={[Navigation, Pagination, A11y, Autoplay, FreeMode]}
         slidesPerView={4}
@@ -68,6 +68,6 @@ export default function ProductsCarouselDisplay({ products }: { products: Produc
           <ArrowRightIcon className="h-8 w-8" />
         </button>
       </Swiper>
-    </>
+    </section>
   );
 }
