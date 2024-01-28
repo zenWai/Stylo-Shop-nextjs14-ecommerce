@@ -54,9 +54,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <Suspense>
           <main>{children}</main>
         </Suspense>
-        <Suspense>
-          <Footer />
-        </Suspense>
+        <Footer />
       </body>
     </html>
   );
