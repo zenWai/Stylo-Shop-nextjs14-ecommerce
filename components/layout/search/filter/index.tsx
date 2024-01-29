@@ -18,20 +18,18 @@ function FilterItemList({ list }: { list: ListItem[] }) {
 
 export default function FilterList({ list, title }: { list: ListItem[]; title?: string }) {
   return (
-    <>
-      <nav>
-        {title ? <h3 className="hidden text-xs text-neutral-500 md:block">{title}</h3> : null}
-        <ul className="hidden md:block">
-          <Suspense>
-            <FilterItemList list={list} />
-          </Suspense>
-        </ul>
-        <ul className="md:hidden">
-          <Suspense>
-            <FilterItemDropdown list={list} />
-          </Suspense>
-        </ul>
-      </nav>
-    </>
+    <nav>
+      {title ? <h3 className="hidden text-xs text-neutral-500 md:block">{title}</h3> : null}
+      <ul className="hidden md:block">
+        <Suspense>
+          <FilterItemList list={list} />
+        </Suspense>
+      </ul>
+      <ul className="md:hidden">
+        <Suspense>
+          <FilterItemDropdown list={list} />
+        </Suspense>
+      </ul>
+    </nav>
   );
 }

@@ -10,7 +10,7 @@ export default async function Footer() {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
   const menu = await getMenu('next-js-frontend-footer-menu');
-  const copyrightName = COMPANY_NAME || SITE_NAME || '';
+  const copyrightName = COMPANY_NAME ?? SITE_NAME ?? '';
 
   return (
     <footer className="bg-customBeige text-sm text-black">

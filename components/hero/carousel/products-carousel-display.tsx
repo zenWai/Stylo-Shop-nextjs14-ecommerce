@@ -41,8 +41,8 @@ export default function ProductsCarouselDisplay({ products }: { products: Produc
           1024: { slidesPerView: 4 }
         }}
       >
-        {products.map((product, i) => (
-          <SwiperSlide key={`${product.handle}${i}`}>
+        {products.map((product) => (
+          <SwiperSlide key={`${product.handle}`}>
             <div className="swiper-container aspect-square flex-none">
               <Link href={`/product/${product.handle}`} className="relative h-full w-full">
                 <GridTileImage

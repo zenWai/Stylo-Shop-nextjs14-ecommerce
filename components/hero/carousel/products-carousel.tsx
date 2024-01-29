@@ -10,9 +10,5 @@ export default async function ProductsCarousel({ collection }: { collection: str
   const products = await getCollectionProducts({
     collection: collection
   });
-  return (
-    <>
-      <SwiperComponent products={products} />
-    </>
-  );
+  return <SwiperComponent products={products} />;
 }

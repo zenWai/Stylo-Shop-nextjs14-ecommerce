@@ -30,8 +30,7 @@ export async function CustomCtaCollection({
   if (!ctaProducts[0]) return null;
   if (limitItems < 0) return null;
 
-  let products: Product[];
-  limitItems > 0 ? (products = ctaProducts.slice(0, limitItems)) : (products = ctaProducts);
+  const products = limitItems > 0 ? ctaProducts.slice(0, limitItems) : ctaProducts;
 
   buttonLabel ??= 'View More';
   buttonLinkTo ??= '/search/all';
