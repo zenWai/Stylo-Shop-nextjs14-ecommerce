@@ -13,7 +13,8 @@ module.exports = {
       colors: {
         customBeige: 'rgb(221, 208, 200)',
         blushPink: '#FFD1DC',
-        coralPink: '#F88379'
+        coralPink: '#F88379',
+        customBlack: '#363636'
       },
       keyframes: {
         fadeIn: {
