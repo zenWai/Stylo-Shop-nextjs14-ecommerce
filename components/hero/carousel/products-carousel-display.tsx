@@ -55,7 +55,6 @@ export default function ProductsCarouselDisplay({ products }: { products: Produc
                   src={product.featuredImage?.url}
                   fill
                   loading="lazy"
-                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                 />
               </Link>
             </div>

@@ -129,7 +129,6 @@ async function RelatedProducts({ id }: { id: string }) {
                 }}
                 src={product.featuredImage?.url}
                 fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
                 loading="lazy"
               />
             </Link>

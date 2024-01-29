@@ -47,7 +47,6 @@ export async function CustomCtaCollection({
       <GridTileImage
         src={product.featuredImage.url}
         fill
-        sizes={'(min-width: 768px) 33vw, 100vw'}
         loading="lazy"
         alt={product.title}
         label={{
