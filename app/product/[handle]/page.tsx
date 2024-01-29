@@ -21,12 +21,20 @@ export async function generateMetadata({
 
   if (!product) return notFound();
 
+  const productBaseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/product/${params.handle}`
+    : `http://localhost:3000/product/${params.handle}`;
+
   const { url, width, height, altText: alt } = product.featuredImage || {};
+
   const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
 
   return {
     title: product.seo.title || product.title,
     description: product.seo.description || product.description,
+    alternates: {
+      canonical: productBaseUrl
+    },
     robots: {
       index: indexable,
       follow: indexable,
@@ -37,6 +45,7 @@ export async function generateMetadata({
     },
     openGraph: url
       ? {
+          url: productBaseUrl,
           images: [
             {
               url,
