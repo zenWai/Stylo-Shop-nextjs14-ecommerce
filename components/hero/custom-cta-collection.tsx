@@ -12,7 +12,7 @@ export async function CustomCtaCollection({
   sale = false,
   withButton = false,
   buttonLabel = null,
-  buttonLinkTo = null
+  buttonLinkTo = null,
 }: {
   collection: string;
   title: string;
@@ -24,13 +24,14 @@ export async function CustomCtaCollection({
   buttonLinkTo?: null | string;
 }) {
   const ctaProducts = await getCollectionProducts({
-    collection: collection
+    collection: collection,
   });
 
   if (!ctaProducts[0]) return null;
   if (limitItems < 0) return null;
 
-  const products = limitItems > 0 ? ctaProducts.slice(0, limitItems) : ctaProducts;
+  const products =
+    limitItems > 0 ? ctaProducts.slice(0, limitItems) : ctaProducts;
 
   buttonLabel ??= 'View More';
   buttonLinkTo ??= '/search/all';
@@ -53,7 +54,7 @@ export async function CustomCtaCollection({
           position: 'bottom',
           title: product.title as string,
           amount: product.priceRange.minVariantPrice.amount,
-          currencyCode: product.priceRange.minVariantPrice.currencyCode
+          currencyCode: product.priceRange.minVariantPrice.currencyCode,
         }}
       />
       {/* Sale label */}
@@ -76,7 +77,9 @@ export async function CustomCtaCollection({
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-4">
-          {products?.map((product) => <SingleCtaItem key={product.title} product={product} />)}
+          {products?.map((product) => (
+            <SingleCtaItem key={product.title} product={product} />
+          ))}
         </div>
         {customButton}
       </div>

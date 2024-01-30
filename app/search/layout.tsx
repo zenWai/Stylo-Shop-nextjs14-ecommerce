@@ -5,7 +5,11 @@ import FilterList from 'components/layout/search/filter';
 import { sorting } from 'lib/constants';
 import { Suspense } from 'react';
 
-export default function SearchLayout({ children }: { children: React.ReactNode }) {
+export default function SearchLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <Suspense>
       <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 py-8 text-black md:flex-row">

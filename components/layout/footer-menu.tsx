@@ -8,7 +8,7 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
       <Link
         href={item.path}
         className={clsx(
-          'block p-2 text-lg text-black underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm'
+          'block p-2 text-lg text-black underline-offset-4 hover:text-black hover:underline md:inline-block md:text-sm',
         )}
       >
         {item.title}

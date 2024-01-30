@@ -6,7 +6,9 @@ export default function Loading() {
       {Array(12)
         .fill(0)
         .map((_, index) => {
-          return <Grid.Item key={index} className="animate-pulse bg-neutral-100" />;
+          return (
+            <Grid.Item key={index} className="animate-pulse bg-neutral-100" />
+          );
         })}
     </Grid>
   );

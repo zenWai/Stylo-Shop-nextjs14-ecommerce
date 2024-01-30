@@ -2,11 +2,21 @@
 import Link from 'next/link';
 import { GridTileImage } from '@/components/grid/tile';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y, Autoplay, FreeMode } from 'swiper/modules';
+import {
+  Navigation,
+  Pagination,
+  A11y,
+  Autoplay,
+  FreeMode,
+} from 'swiper/modules';
 import { Product } from '@/lib/shopify/types';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
-export default function ProductsCarouselDisplay({ products }: { products: Product[] }) {
+export default function ProductsCarouselDisplay({
+  products,
+}: {
+  products: Product[];
+}) {
   return (
     <section className="py-4">
       <Swiper
@@ -15,7 +25,7 @@ export default function ProductsCarouselDisplay({ products }: { products: Produc
         spaceBetween={10}
         navigation={{
           nextEl: '.custom-swiper-button-next',
-          prevEl: '.custom-swiper-button-prev'
+          prevEl: '.custom-swiper-button-prev',
         }}
         loop
         freeMode={{
@@ -23,34 +33,38 @@ export default function ProductsCarouselDisplay({ products }: { products: Produc
           momentum: true,
           sticky: true,
           momentumVelocityRatio: 0.8,
-          minimumVelocity: 0.1
+          minimumVelocity: 0.1,
         }}
         autoplay={{
           delay: 2500,
-          disableOnInteraction: true
+          disableOnInteraction: true,
         }}
         a11y={{
           enabled: true,
           prevSlideMessage: 'Previous image from slide',
-          nextSlideMessage: 'Next image from slide'
+          nextSlideMessage: 'Next image from slide',
         }}
         breakpoints={{
           100: { slidesPerView: 1 },
           480: { slidesPerView: 2 },
           640: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 }
+          1024: { slidesPerView: 4 },
         }}
       >
         {products.map((product) => (
           <SwiperSlide key={`${product.handle}`}>
             <div className="swiper-container aspect-square flex-none">
-              <Link href={`/product/${product.handle}`} className="relative h-full w-full">
+              <Link
+                href={`/product/${product.handle}`}
+                className="relative h-full w-full"
+              >
                 <GridTileImage
                   alt={product.title}
                   label={{
                     title: product.title,
                     amount: product.priceRange.minVariantPrice.amount,
-                    currencyCode: product.priceRange.minVariantPrice.currencyCode
+                    currencyCode:
+                      product.priceRange.minVariantPrice.currencyCode,
                   }}
                   src={product.featuredImage?.url}
                   fill
@@ -61,7 +75,10 @@ export default function ProductsCarouselDisplay({ products }: { products: Produc
             </div>
           </SwiperSlide>
         ))}
-        <button className="custom-swiper-button-prev" aria-label="Previous Product">
+        <button
+          className="custom-swiper-button-prev"
+          aria-label="Previous Product"
+        >
           <ArrowLeftIcon className="h-8 w-8" />
         </button>
         <button className="custom-swiper-button-next" aria-label="Next Product">

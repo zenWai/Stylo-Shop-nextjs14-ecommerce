@@ -1,4 +1,4 @@
-import Navbar from 'components/layout/navbar';
+import { Navbar } from 'components/layout/navbar';
 import { GeistSans } from 'geist/font/sans';
 import { Great_Vibes, WindSong } from 'next/font/google';
 import { ensureStartsWith } from 'lib/utils';
@@ -10,49 +10,60 @@ const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
-const twitterCreator = TWITTER_CREATOR ? ensureStartsWith(TWITTER_CREATOR, '@') : undefined;
-const twitterSite = TWITTER_SITE ? ensureStartsWith(TWITTER_SITE, 'https://') : undefined;
+const twitterCreator = TWITTER_CREATOR
+  ? ensureStartsWith(TWITTER_CREATOR, '@')
+  : undefined;
+const twitterSite = TWITTER_SITE
+  ? ensureStartsWith(TWITTER_SITE, 'https://')
+  : undefined;
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
     default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`
+    template: `%s | ${SITE_NAME}`,
   },
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
-      follow: true
-    }
+      follow: true,
+    },
   },
   ...(twitterCreator &&
     twitterSite && {
       twitter: {
         card: 'summary_large_image',
         creator: twitterCreator,
-        site: twitterSite
-      }
-    })
+        site: twitterSite,
+      },
+    }),
 };
 
 const windSong = WindSong({
   subsets: ['latin'],
   display: 'swap',
   weight: ['500'],
-  variable: '--font-windSong'
+  variable: '--font-windSong',
 });
 const greatVibes = Great_Vibes({
   subsets: ['latin'],
   display: 'swap',
   weight: ['400'],
-  variable: '--font-greatVibes'
+  variable: '--font-greatVibes',
 });
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}
+    >
       <body className="bg-customBeige text-black selection:bg-teal-300">
         <Navbar />
         <Suspense>

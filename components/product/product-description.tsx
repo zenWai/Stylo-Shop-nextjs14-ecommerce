@@ -18,13 +18,22 @@ export function ProductDescription({ product }: { product: Product }) {
         </div>
       </div>
       <Suspense>
-        <VariantSelector options={product.options} variants={product.variants} />
+        <VariantSelector
+          options={product.options}
+          variants={product.variants}
+        />
       </Suspense>
       {product.descriptionHtml ? (
-        <Prose className="mb-6 text-sm leading-tight" html={product.descriptionHtml} />
+        <Prose
+          className="mb-6 text-sm leading-tight"
+          html={product.descriptionHtml}
+        />
       ) : null}
       <Suspense>
-        <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
+        <AddToCart
+          variants={product.variants}
+          availableForSale={product.availableForSale}
+        />
       </Suspense>
     </>
   );

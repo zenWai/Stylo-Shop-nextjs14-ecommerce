@@ -4,7 +4,7 @@ import { list } from '@vercel/blob';
 export default async function Video({ fileName }: { fileName: string }) {
   const { blobs } = await list({
     prefix: fileName,
-    limit: 1
+    limit: 1,
   });
   // @ts-ignore
   const { url } = blobs[0];

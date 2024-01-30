@@ -9,12 +9,13 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
 export const metadata = {
-  description: 'High-performance ecommerce store built with Next.js, Vercel, and Shopify.',
+  description:
+    'High-performance ecommerce store built with Next.js, Vercel, and Shopify.',
   openGraph: {
     type: 'website',
-    url: baseUrl
+    url: baseUrl,
   },
-  alternates: { canonical: baseUrl }
+  alternates: { canonical: baseUrl },
 };
 
 export default async function HomePage() {
@@ -24,7 +25,7 @@ export default async function HomePage() {
     ctaShiny: 'hidden-homepage-carousel-shiny',
     featured: 'hidden-homepage-featured-items',
     earrings: 'hidden-homepage-carousel-earrings',
-    sale: 'hidden-homepage-hero-cta-sale-items'
+    sale: 'hidden-homepage-hero-cta-sale-items',
   };
   return (
     <>

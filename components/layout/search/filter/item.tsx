@@ -21,7 +21,7 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
       <DynamicTag
         href={createUrl(item.path, newParams)}
         className={clsx('w-full text-sm underline-offset-4 hover:underline', {
-          'underline underline-offset-4': active
+          'underline underline-offset-4': active,
         })}
       >
         {item.title}
@@ -39,8 +39,8 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
     pathname,
     new URLSearchParams({
       ...(q && { q }),
-      ...(item.slug?.length && { sort: item.slug })
-    })
+      ...(item.slug?.length && { sort: item.slug }),
+    }),
   );
   const DynamicTag = active ? 'p' : Link;
 
@@ -50,7 +50,7 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
         prefetch={!active ? false : undefined}
         href={href}
         className={clsx('w-full hover:underline hover:underline-offset-4', {
-          'underline underline-offset-4': active
+          'underline underline-offset-4': active,
         })}
       >
         {item.title}
@@ -60,5 +60,9 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
 }
 
 export function FilterItem({ item }: { item: ListItem }) {
-  return 'path' in item ? <PathFilterItem item={item} /> : <SortFilterItem item={item} />;
+  return 'path' in item ? (
+    <PathFilterItem item={item} />
+  ) : (
+    <SortFilterItem item={item} />
+  );
 }
