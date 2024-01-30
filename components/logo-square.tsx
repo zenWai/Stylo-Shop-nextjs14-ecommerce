@@ -1,5 +1,5 @@
+import LogoIcon from '@/components/icons/logo';
 import clsx from 'clsx';
-import LogoIcon from './icons/logo';
 
 export default function LogoSquare({ size }: { size?: 'sm' }) {
   return (
@@ -12,12 +12,20 @@ export default function LogoSquare({ size }: { size?: 'sm' }) {
         }
       )}
     >
+      {/* #TODO: svg logo is making dom have too many items */}
       <LogoIcon
         className={clsx({
           'h-[40px] w-[40px] rounded-xl': !size,
           'h-[30px] w-[30px] rounded-lg': size === 'sm'
         })}
       />
+      {/* Can't static import using edge? Without static import there are too many cache misses!
+       * Works on production but not on development!
+       * #TODO: Check later
+       */}
+      {/*<Image
+        src={logo} alt="logo" width={40} height={40}
+      />*/}
     </div>
   );
 }
