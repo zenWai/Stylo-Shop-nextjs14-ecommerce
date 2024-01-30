@@ -106,6 +106,11 @@ export type ShopifyCollection = {
   description: string;
   seo: SEO;
   updatedAt: string;
+  image: {
+    src: string;
+    width: number | undefined;
+    height: number | undefined;
+  } | null;
 };
 
 export type ShopifyProduct = {

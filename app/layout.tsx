@@ -20,8 +20,12 @@ export const metadata = {
     template: `%s | ${SITE_NAME}`
   },
   robots: {
+    index: true,
     follow: true,
-    index: true
+    googleBot: {
+      index: true,
+      follow: true
+    }
   },
   ...(twitterCreator &&
     twitterSite && {

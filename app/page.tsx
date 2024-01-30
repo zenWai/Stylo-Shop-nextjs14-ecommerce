@@ -5,11 +5,16 @@ import Video from '../components/hero/video';
 
 export const runtime = 'edge';
 
+const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : 'http://localhost:3000';
 export const metadata = {
   description: 'High-performance ecommerce store built with Next.js, Vercel, and Shopify.',
   openGraph: {
-    type: 'website'
-  }
+    type: 'website',
+    url: baseUrl
+  },
+  alternates: { canonical: baseUrl }
 };
 
 export default async function HomePage() {

@@ -324,6 +324,7 @@ export async function getCollections(): Promise<Collection[]> {
         title: 'All',
         description: 'All products'
       },
+      image: null,
       path: '/search',
       updatedAt: new Date().toISOString()
     },

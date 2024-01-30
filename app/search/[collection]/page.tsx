@@ -17,10 +17,24 @@ export async function generateMetadata({
 
   if (!collection) return notFound();
 
+  const { src, width, height } = collection.image || {};
+
   return {
     title: collection.seo?.title || collection.title,
     description:
-      collection.seo?.description || collection.description || `${collection.title} products`
+      collection.seo?.description || collection.description || `${collection.title} products`,
+    openGraph: src
+      ? {
+          url: `/search/${collection.handle}`,
+          images: [
+            {
+              url: src,
+              width: width,
+              height: height
+            }
+          ]
+        }
+      : null
   };
 }
 
