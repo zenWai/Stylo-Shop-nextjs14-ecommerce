@@ -1,6 +1,6 @@
+import type { MetadataRoute } from 'next';
 import { getCollections, getPages, getProducts } from 'lib/shopify';
 import { validateEnvironmentVariables } from 'lib/utils';
-import { MetadataRoute } from 'next';
 
 type Route = {
   url: string;
@@ -47,7 +47,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       await Promise.all([collectionsPromise, productsPromise, pagesPromise])
     ).flat();
   } catch (error) {
-    throw JSON.stringify(error, null, 2);
+    const errorMessage = `An error occurred: ${JSON.stringify(error, null, 2)}`;
+    throw new Error(errorMessage);
   }
 
   return [...routesMap, ...fetchedRoutes];
