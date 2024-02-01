@@ -1,9 +1,9 @@
+import React, { Suspense } from 'react';
 import Loading from '@/app/search/loading';
 import CollectionsList from '@/components/layout/search/collections-list';
 import SkeletonCollectionListSearchPage from '@/components/skeletons/collection-list-search-page';
 import FilterList from 'components/layout/search/filter';
 import { sorting } from 'lib/constants';
-import { Suspense } from 'react';
 
 export default function SearchLayout({
   children,

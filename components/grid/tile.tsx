@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import React from 'react';
 import Label from '../label';
 
 export function GridTileImage({
@@ -40,10 +41,10 @@ export function GridTileImage({
       ) : null}
       {label ? (
         <Label
-          title={label.title}
           amount={label.amount}
           currencyCode={label.currencyCode}
           position={label.position}
+          title={label.title}
         />
       ) : null}
     </div>

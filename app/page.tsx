@@ -29,30 +29,28 @@ export default async function HomePage() {
   };
   return (
     <>
-      <Video fileName={'video.mp4'} />
+      <Video fileName="video.mp4" />
       <CustomCtaCollection
-        collection={collection.ctaEarrings}
-        title={'Our Most exquisite Earrings'}
-        limitItems={4}
-        tagLine={
-          'Explore the collection of our exquisite earrings: sophistication in every detail.'
-        }
-        withButton={true}
         buttonLabel="View All Earrings"
-        buttonLinkTo={'/search/earrings'}
+        buttonLinkTo="/search/earrings"
+        collection={collection.ctaEarrings}
+        limitItems={4}
+        tagLine="Explore the collection of our exquisite earrings: sophistication in every detail."
+        title="Our Most exquisite Earrings"
+        withButton
       />
       <ProductsCarousel collection={collection.earrings} />
       <ThreeItemGrid collection={collection.featured} />
       <ProductsCarousel collection={collection.ctaNecklaceBracelet} />
       <CustomCtaCollection
-        collection={collection.sale}
-        title={'Our featured Special Jewels'}
-        limitItems={8}
-        tagLine={'Sparkling Sales Await!'}
-        sale={true}
-        withButton={true}
         buttonLabel="See Specials"
-        buttonLinkTo={'/search'}
+        buttonLinkTo="/search"
+        collection={collection.sale}
+        limitItems={8}
+        sale
+        tagLine="Sparkling Sales Await!"
+        title="Our featured Special Jewels"
+        withButton
       />
       <ProductsCarousel collection={collection.ctaShiny} />
     </>

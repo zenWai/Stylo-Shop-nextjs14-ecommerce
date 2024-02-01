@@ -1,8 +1,8 @@
-import { Navbar } from 'components/layout/navbar';
 import { GeistSans } from 'geist/font/sans';
 import { Great_Vibes, WindSong } from 'next/font/google';
+import type { ReactNode } from 'react';
 import { ensureStartsWith } from 'lib/utils';
-import { ReactNode, Suspense } from 'react';
+import { Navbar } from 'components/layout/navbar';
 import './globals.css';
 import Footer from '../components/layout/footer';
 
@@ -16,12 +16,13 @@ const twitterCreator = TWITTER_CREATOR
 const twitterSite = TWITTER_SITE
   ? ensureStartsWith(TWITTER_SITE, 'https://')
   : undefined;
+const siteName = SITE_NAME ?? 'Website';
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`,
+    default: siteName,
+    template: `%s | ${siteName}`,
   },
   robots: {
     index: true,
@@ -61,14 +62,12 @@ export default async function RootLayout({
 }) {
   return (
     <html
-      lang="en"
       className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}
+      lang="en"
     >
       <body className="bg-customBeige text-black selection:bg-teal-300">
         <Navbar />
-        <Suspense>
-          <main>{children}</main>
-        </Suspense>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

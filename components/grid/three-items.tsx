@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import { GridTileImage } from 'components/grid/tile';
 import { getCollectionProducts } from 'lib/shopify';
 import type { Product } from 'lib/shopify/types';
-import Link from 'next/link';
 
 function ThreeItemGridItem({
   item,
@@ -25,22 +25,22 @@ function ThreeItemGridItem({
         href={`/product/${item.handle}`}
       >
         <GridTileImage
-          src={item.featuredImage.url}
+          alt={item.title}
           fill
+          label={{
+            position: size === 'full' ? 'center' : 'bottom',
+            title: item.title,
+            amount: item.priceRange.maxVariantPrice.amount,
+            currencyCode: item.priceRange.maxVariantPrice.currencyCode,
+          }}
+          loading="lazy"
+          priority={priority}
           sizes={
             size === 'full'
               ? '(min-width: 768px) 66vw, 100vw'
               : '(min-width: 768px) 33vw, 100vw'
           }
-          priority={priority}
-          loading="lazy"
-          alt={item.title}
-          label={{
-            position: size === 'full' ? 'center' : 'bottom',
-            title: item.title as string,
-            amount: item.priceRange.maxVariantPrice.amount,
-            currencyCode: item.priceRange.maxVariantPrice.currencyCode,
-          }}
+          src={item.featuredImage.url}
         />
       </Link>
     </div>
@@ -50,7 +50,7 @@ function ThreeItemGridItem({
 export async function ThreeItemGrid({ collection }: { collection: string }) {
   // Collections that start with `hidden-*` are hidden from the search page.
   const homepageItems = await getCollectionProducts({
-    collection: collection,
+    collection,
   });
 
   if (!homepageItems[0] || !homepageItems[1] || !homepageItems[2]) return null;
@@ -59,9 +59,9 @@ export async function ThreeItemGrid({ collection }: { collection: string }) {
 
   return (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 py-2 md:grid-cols-6 md:grid-rows-2">
-      <ThreeItemGridItem size="full" item={firstProduct} priority={false} />
-      <ThreeItemGridItem size="half" item={secondProduct} priority={false} />
-      <ThreeItemGridItem size="half" item={thirdProduct} />
+      <ThreeItemGridItem item={firstProduct} priority={false} size="full" />
+      <ThreeItemGridItem item={secondProduct} priority={false} size="half" />
+      <ThreeItemGridItem item={thirdProduct} size="half" />
     </section>
   );
 }

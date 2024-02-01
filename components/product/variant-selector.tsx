@@ -1,9 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import { ProductOption, ProductVariant } from 'lib/shopify/types';
-import { createUrl } from 'lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { ProductOption, ProductVariant } from 'lib/shopify/types';
+import { createUrl } from 'lib/utils';
 
 type Combination = {
   id: string;
@@ -88,13 +88,7 @@ export function VariantSelector({
 
           return (
             <button
-              key={value}
               aria-disabled={!isAvailableForSale}
-              disabled={!isAvailableForSale}
-              onClick={() => {
-                router.replace(optionUrl, { scroll: false });
-              }}
-              title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
               className={clsx(
                 'flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm',
                 {
@@ -105,6 +99,13 @@ export function VariantSelector({
                     !isAvailableForSale,
                 },
               )}
+              disabled={!isAvailableForSale}
+              key={value}
+              onClick={() => {
+                router.replace(optionUrl, { scroll: false });
+              }}
+              title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
+              type="button"
             >
               {value}
             </button>

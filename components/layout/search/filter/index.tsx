@@ -1,16 +1,16 @@
-import { SortFilterItem } from 'lib/constants';
 import { Suspense } from 'react';
+import type { SortFilterItemType } from 'lib/constants';
 import FilterItemDropdown from './dropdown';
 import { FilterItem } from './item';
 
-export type ListItem = SortFilterItem | PathFilterItem;
-export type PathFilterItem = { title: string; path: string };
+export type ListItemType = SortFilterItemType | PathFilterItemType;
+export type PathFilterItemType = { title: string; path: string };
 
-function FilterItemList({ list }: { list: ListItem[] }) {
+function FilterItemList({ list }: { list: ListItemType[] }) {
   return (
     <>
-      {list.map((item: ListItem, i) => (
-        <FilterItem key={i} item={item} />
+      {list.map((item: ListItemType, i) => (
+        <FilterItem item={item} key={i} />
       ))}
     </>
   );
@@ -20,7 +20,7 @@ export default function FilterList({
   list,
   title,
 }: {
-  list: ListItem[];
+  list: ListItemType[];
   title?: string;
 }) {
   return (

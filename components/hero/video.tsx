@@ -6,33 +6,33 @@ export default async function Video({ fileName }: { fileName: string }) {
     prefix: fileName,
     limit: 1,
   });
-  // @ts-ignore
+  if (!blobs[0]) return null;
   const { url } = blobs[0];
   return (
     <section>
       <div className="relative h-screen min-w-full overflow-hidden">
         {/* Video */}
         <video
-          className="absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
-          preload="auto"
           autoPlay
-          muted
+          className="absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
           loop
+          muted
           playsInline //ios safari fix
+          preload="auto"
         >
           <source src={url} type="video/mp4" />
           {/* Fallback image for browsers that don't support video */}
           <Image
-            src="/logonew.png"
             alt="Stylo Shop logo"
-            height="500"
-            width="500"
             className="absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
+            height="500"
+            src="/logonew.png"
+            width="500"
           />
         </video>
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
 
         {/* Content overlay */}
         <div className="relative z-10 flex h-full items-center justify-center text-white">
