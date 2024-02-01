@@ -7,6 +7,7 @@
     "lint-staged": "lint-staged",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
+    "start": "next start",
     "test": "pnpm lint && pnpm prettier:check"
   },
   "lint-staged": {
