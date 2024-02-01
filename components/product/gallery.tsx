@@ -1,11 +1,11 @@
 'use client';
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
-import { GridTileImage } from 'components/grid/tile';
-import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { createUrl } from 'lib/utils';
+import { GridTileImage } from 'components/grid/tile';
 
 export function Gallery({
   images,
@@ -34,33 +34,33 @@ export function Gallery({
   return (
     <>
       <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
-        {images[imageIndex] && (
+        {images[imageIndex] ? (
           <Image
+            alt={images[imageIndex]?.altText ?? 'A product image'}
             className="h-full w-full object-contain"
             fill
+            priority
             sizes="(min-width: 1024px) 66vw, 100vw"
-            alt={images[imageIndex]?.altText as string}
-            src={images[imageIndex]?.src as string}
-            priority={true}
+            src={images[imageIndex]?.src ?? '/logonew.png'}
           />
-        )}
+        ) : null}
 
         {images.length > 1 ? (
           <div className="absolute bottom-[15%] flex w-full justify-center">
             <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur">
               <Link
                 aria-label="Previous product image"
-                href={previousUrl}
                 className={buttonClassName}
+                href={previousUrl}
                 scroll={false}
               >
                 <ArrowLeftIcon className="h-5" />
               </Link>
-              <div className="mx-1 h-6 w-px bg-neutral-500"></div>
+              <div className="mx-1 h-6 w-px bg-neutral-500" />
               <Link
                 aria-label="Next product image"
-                href={nextUrl}
                 className={buttonClassName}
+                href={nextUrl}
                 scroll={false}
               >
                 <ArrowRightIcon className="h-5" />
@@ -81,19 +81,19 @@ export function Gallery({
             imageSearchParams.set('image', index.toString());
 
             return (
-              <li key={image.src} className="h-20 w-20">
+              <li className="h-20 w-20" key={image.src}>
                 <Link
                   aria-label="Enlarge product image"
+                  className="h-full w-full"
                   href={createUrl(pathname, imageSearchParams)}
                   scroll={false}
-                  className="h-full w-full"
                 >
                   <GridTileImage
+                    active={isActive}
                     alt={image.altText}
+                    height={80}
                     src={image.src}
                     width={80}
-                    height={80}
-                    active={isActive}
                   />
                 </Link>
               </li>
