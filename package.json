@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build-start": "next build && next start",
     "dev": "next dev --turbo",
     "lint": "next lint",
     "lint-staged": "lint-staged",
