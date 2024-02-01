@@ -1,21 +1,24 @@
 'use client';
 
-import SkeletonSearchInput from '@/components/skeletons/search-input';
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Fragment, Suspense, useEffect, useState } from 'react';
-
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Menu } from 'lib/shopify/types';
+import SkeletonSearchInput from '@/components/skeletons/search-input';
+import type { Menu } from 'lib/shopify/types';
 import Search from './search';
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
-  const openMobileMenu = () => setIsOpen(true);
-  const closeMobileMenu = () => setIsOpen(false);
+  const openMobileMenu = () => {
+    setIsOpen(true);
+  };
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,7 +27,9 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
       }
     };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -34,14 +39,15 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
   return (
     <>
       <button
-        onClick={openMobileMenu}
         aria-label="Open mobile menu"
         className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors md:hidden"
+        onClick={openMobileMenu}
+        type="button"
       >
         <Bars3Icon className="h-4" />
       </button>
       <Transition show={isOpen}>
-        <Dialog onClose={closeMobileMenu} className="relative z-50">
+        <Dialog className="relative z-50" onClose={closeMobileMenu}>
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -51,7 +57,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
             leaveFrom="opacity-100 backdrop-blur-[.5px]"
             leaveTo="opacity-0 backdrop-blur-none"
           >
-            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div aria-hidden="true" className="fixed inset-0 bg-black/30" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
@@ -65,9 +71,10 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
             <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-customBeige pb-6">
               <div className="p-4">
                 <button
+                  aria-label="Close mobile menu"
                   className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors"
                   onClick={closeMobileMenu}
-                  aria-label="Close mobile menu"
+                  type="button"
                 >
                   <XMarkIcon className="h-6" />
                 </button>

@@ -13,6 +13,7 @@ export default function Error({ reset }: { reset: () => void }) {
         onClick={() => {
           reset();
         }}
+        type="button"
       >
         Try Again
       </button>
