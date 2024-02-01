@@ -29,3 +29,27 @@ function findError<T extends object>(error: T): boolean {
 
   return prototype === null ? false : findError(prototype);
 }
+
+export class ShopifyError extends Error {
+  cause: string;
+  status: number;
+  query: string;
+
+  constructor(
+    message: string,
+    {
+      cause,
+      status,
+      query,
+    }: { cause?: string; status?: number; query: string },
+  ) {
+    super(message);
+    this.cause = cause || 'unknown';
+    this.status = status || 500;
+    this.query = query;
+
+    Error.captureStackTrace(this, ShopifyError);
+
+    this.name = 'ShopifyError';
+  }
+}
