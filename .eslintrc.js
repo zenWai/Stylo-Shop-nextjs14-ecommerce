@@ -35,5 +35,21 @@ module.exports = {
         case: 'kebabCase',
       },
     ],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'function-declaration',
+        unnamedComponents: 'function-expression',
+      },
+    ],
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/consistent-type-definitions': 0,
+    'import/no-default-export': 0,
+    '@typescript-eslint/require-await': 0,
+    camelcase: 0,
+    '@typescript-eslint/no-shadow': 0,
+    'no-nested-ternary': 0,
+    'no-console': 0,
+    'react/no-array-index-key': 0,
   },
 };
