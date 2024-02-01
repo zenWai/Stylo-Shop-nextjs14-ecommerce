@@ -2,7 +2,7 @@
 module.exports = {
   eslint: {
     // Disabling on production builds because we're running checks on PRs via GitHub Actions.
-    ignoreDuringBuilds: true
+    ignoreDuringBuilds: true,
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -10,17 +10,17 @@ module.exports = {
       {
         protocol: 'https',
         hostname: 'cdn.shopify.com',
-        pathname: '/s/files/**'
-      }
-    ]
+        pathname: '/s/files/**',
+      },
+    ],
   },
   async redirects() {
     return [
       {
         source: '/password',
         destination: '/',
-        permanent: true
-      }
+        permanent: true,
+      },
     ];
-  }
+  },
 };

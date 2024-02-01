@@ -1,6 +1,12 @@
 import Link from 'next/link';
 
-export default function CustomButtonLink({ text, linkTo }: { text: string; linkTo: string }) {
+export default function CustomButtonLink({
+  text,
+  linkTo,
+}: {
+  text: string;
+  linkTo: string;
+}) {
   return (
     <div className="mt-4 flex justify-center">
       <Link

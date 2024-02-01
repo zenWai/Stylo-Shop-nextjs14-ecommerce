@@ -1,11 +1,22 @@
 'use server';
 
-import { TAGS } from 'lib/constants';
-import { addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/shopify';
-import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
+import { TAGS } from 'lib/constants';
+import {
+  addToCart,
+  createCart,
+  getCart,
+  removeFromCart,
+  updateCart,
+} from 'lib/shopify';
 
-export async function addItem(prevState: any, selectedVariantId: string | undefined) {
+type PrevStateType = null | string | undefined;
+
+export async function addItem(
+  prevState: PrevStateType,
+  selectedVariantId: string | undefined,
+) {
   let cartId = cookies().get('cartId')?.value;
   let cart;
 
@@ -24,14 +35,16 @@ export async function addItem(prevState: any, selectedVariantId: string | undefi
   }
 
   try {
-    await addToCart(cartId, [{ merchandiseId: selectedVariantId, quantity: 1 }]);
+    await addToCart(cartId, [
+      { merchandiseId: selectedVariantId, quantity: 1 },
+    ]);
     revalidateTag(TAGS.cart);
   } catch (e) {
     return 'Error adding item to cart';
   }
 }
 
-export async function removeItem(prevState: any, lineId: string) {
+export async function removeItem(prevState: PrevStateType, lineId: string) {
   const cartId = cookies().get('cartId')?.value;
 
   if (!cartId) {
@@ -47,12 +60,12 @@ export async function removeItem(prevState: any, lineId: string) {
 }
 
 export async function updateItemQuantity(
-  prevState: any,
+  prevState: PrevStateType,
   payload: {
     lineId: string;
     variantId: string;
     quantity: number;
-  }
+  },
 ) {
   const cartId = cookies().get('cartId')?.value;
 
@@ -73,8 +86,8 @@ export async function updateItemQuantity(
       {
         id: lineId,
         merchandiseId: variantId,
-        quantity
-      }
+        quantity,
+      },
     ]);
     revalidateTag(TAGS.cart);
   } catch (e) {

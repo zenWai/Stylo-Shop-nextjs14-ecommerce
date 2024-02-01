@@ -1,5 +1,5 @@
+import type { NextRequest, NextResponse } from 'next/server';
 import { revalidate } from 'lib/shopify';
-import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 

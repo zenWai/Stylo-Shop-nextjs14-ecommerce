@@ -2,12 +2,11 @@
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import type { ListItem } from '.';
 import { FilterItem } from './item';
+import type { ListItemType } from '.';
 
-export default function FilterItemDropdown({ list }: { list: ListItem[] }) {
+export default function FilterItemDropdown({ list }: { list: ListItemType[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [active, setActive] = useState('');
@@ -22,11 +21,13 @@ export default function FilterItemDropdown({ list }: { list: ListItem[] }) {
     };
 
     window.addEventListener('click', handleClickOutside);
-    return () => window.removeEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
   }, []);
 
   useEffect(() => {
-    list.forEach((listItem: ListItem) => {
+    list.forEach((listItem: ListItemType) => {
       if (
         ('path' in listItem && pathname === listItem.path) ||
         ('slug' in listItem && searchParams.get('sort') === listItem.slug)
@@ -39,26 +40,40 @@ export default function FilterItemDropdown({ list }: { list: ListItem[] }) {
   return (
     <div className="relative" ref={ref}>
       <div
+        className="flex w-full items-center justify-between rounded border border-black/30 px-4 py-2 text-sm"
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="flex w-full items-center justify-between rounded border border-black/30 px-4 py-2 text-sm"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === 'Space') {
+            setOpenSelect(!openSelect);
+          }
+        }}
+        role="button"
+        tabIndex={0}
       >
         <div>{active}</div>
         <ChevronDownIcon className="h-4" />
       </div>
-      {openSelect && (
+      {openSelect ? (
         <div
+          className="absolute z-40 w-full rounded-b-md bg-white p-4 shadow-md"
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute z-40 w-full rounded-b-md bg-white p-4 shadow-md"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === 'Space') {
+              setOpenSelect(false);
+            }
+          }}
+          role="button"
+          tabIndex={0}
         >
-          {list.map((item: ListItem, i) => (
-            <FilterItem key={i} item={item} />
+          {list.map((item: ListItemType, i) => (
+            <FilterItem item={item} key={i} />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
