@@ -21,6 +21,10 @@ module.exports = {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        bounceUp: {
+          '33%, 100%': { top: '0' },
+          '66%': { top: '20px' },
+        },
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-100%)' },
@@ -34,6 +38,7 @@ module.exports = {
       animation: {
         fadeIn: 'fadeIn .3s ease-in-out',
         blink: 'blink 1.4s both infinite',
+        bounceUp: 'bounceUp 2.5s infinite',
       },
     },
   },
