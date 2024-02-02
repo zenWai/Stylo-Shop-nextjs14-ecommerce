@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const collection = await getCollection(params.collection);
 
-  if (!collection) return notFound();
+  if (!collection) notFound();
 
   const { src, width, height } = collection.image ?? {};
 
@@ -53,6 +53,7 @@ export default async function CategoryPage({
     sortKey,
     reverse,
   });
+  if (!products) notFound();
   /*const products:any = await mockFetchDelay(() => getCollectionProducts({ collection: params.collection, sortKey, reverse }));*/
   return (
     <section>

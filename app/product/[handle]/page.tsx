@@ -19,7 +19,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const product = await getProduct(params.handle);
 
-  if (!product) return notFound();
+  if (!product) notFound();
   const productBaseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/product/${params.handle}`
     : `http://localhost:3000/product/${params.handle}`;
@@ -65,7 +65,7 @@ export default async function ProductPage({
 }) {
   const product = await getProduct(params.handle);
 
-  if (!product) return notFound();
+  if (!product) notFound();
 
   const productJsonLd = {
     '@context': 'https://schema.org',
@@ -90,7 +90,7 @@ export default async function ProductPage({
         {JSON.stringify(productJsonLd)}
       </Script>
 
-      <div className="mx-auto max-w-screen-2xl px-4">
+      <div className="mx-auto max-w-screen-2xl px-4 py-8">
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8">
           <div className="h-full w-full basis-full lg:basis-4/6">
             {product.images ? (
