@@ -53,7 +53,7 @@ export default async function CategoryPage({
     sortKey,
     reverse,
   });
-  if (!products) notFound();
+
   /*const products:any = await mockFetchDelay(() => getCollectionProducts({ collection: params.collection, sortKey, reverse }));*/
   return (
     <section>

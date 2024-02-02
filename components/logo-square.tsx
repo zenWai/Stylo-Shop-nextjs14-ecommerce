@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import Image from 'next/image';
+import logoShop from '@/public/logonew.png';
 import LogoIcon from './icons/logo';
 
 export default function LogoSquare({ size }: { size?: 'sm' }) {
@@ -12,6 +14,7 @@ export default function LogoSquare({ size }: { size?: 'sm' }) {
         },
       )}
     >
+      <Image alt="logo" height={40} src={logoShop} width={40} />
       <LogoIcon
         className={clsx({
           'h-[40px] w-[40px] rounded-xl': !size,
