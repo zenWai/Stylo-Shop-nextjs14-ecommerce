@@ -144,7 +144,10 @@ const reshapeCart = (cart: ShopifyCart): Cart => {
   } as Omit<ShopifyCart, 'lines'> & { lines: CartItem[] };
 };
 
-const reshapeCollection = (collection: ShopifyCollection): Collection => {
+const reshapeCollection = (
+  collection: ShopifyCollection,
+): Collection | undefined => {
+  if (!collection?.handle) return undefined;
   return {
     ...collection,
     path: `/search/${collection.handle}`,
@@ -179,14 +182,15 @@ const reshapeProduct = (
   product: ShopifyProduct,
   filterHiddenProducts = true,
 ) => {
+  if (!product.handle) return undefined;
   if (filterHiddenProducts && product.tags.includes(HIDDEN_PRODUCT_TAG))
     return undefined;
 
-  const { images, variants, ...rest } = product;
+  const { images = undefined, variants, ...rest } = product;
 
   return {
     ...rest,
-    images: reshapeImages(images, product.title),
+    images: images ? reshapeImages(images, product.title) : undefined,
     variants: removeEdgesAndNodes(variants),
   };
 };
@@ -284,7 +288,7 @@ export async function getCollection(
       handle,
     },
   });
-
+  if (!res.body.data.collection) return undefined;
   return reshapeCollection(res.body.data.collection);
 }
 
@@ -339,11 +343,11 @@ export async function getCollections(): Promise<Collection[]> {
     // Filter out the `hidden` collections.
     // Collections that start with `hidden-*` need to be hidden on the search page.
     ...reshapeCollections(shopifyCollections).filter(
-      (collection) => !collection.handle.startsWith('hidden'),
+      (collection) => !collection?.handle.startsWith('hidden'),
     ),
   ];
 
-  return collections;
+  return collections as Collection[];
 }
 
 export async function getMenu(handle: string): Promise<Menu[]> {
@@ -391,7 +395,8 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
       handle,
     },
   });
-
+  if (!res.body.data.product) return undefined;
+  if (!res.body.data.product.handle) return undefined;
   return reshapeProduct(res.body.data.product, false);
 }
 

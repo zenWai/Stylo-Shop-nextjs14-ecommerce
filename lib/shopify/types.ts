@@ -63,7 +63,7 @@ export type Page = {
 
 export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
   variants: ProductVariant[];
-  images: Image[];
+  images?: Image[];
 };
 
 export type ProductOption = {
@@ -111,7 +111,7 @@ export type ShopifyCollection = {
     width: number | undefined;
     height: number | undefined;
   } | null;
-};
+} | null;
 
 export type ShopifyProduct = {
   id: string;
@@ -127,7 +127,7 @@ export type ShopifyProduct = {
   };
   variants: Connection<ProductVariant>;
   featuredImage: Image;
-  images: Connection<Image>;
+  images: Connection<Image> | null;
   seo: SEO;
   tags: string[];
   updatedAt: string;
@@ -229,7 +229,7 @@ export type ShopifyPagesOperation = {
 };
 
 export type ShopifyProductOperation = {
-  product: ShopifyProduct;
+  product?: ShopifyProduct;
   variables: {
     handle: string;
   };
