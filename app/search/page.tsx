@@ -13,7 +13,7 @@ export const metadata = {
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const { sort, q: searchValue } = searchParams as Record<string, string>;
   const { sortKey, reverse } =

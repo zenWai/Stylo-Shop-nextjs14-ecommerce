@@ -16,13 +16,12 @@ export async function generateMetadata({
 
   if (!collection) return notFound();
 
-  const { src, width, height } = collection.image || {};
+  const { src, width, height } = collection.image ?? {};
 
   return {
-    title: collection.seo?.title || collection.title,
+    title: collection.seo?.title ?? collection.title,
     description:
-      collection.seo?.description ||
-      collection.description ||
+      (collection.seo?.description ?? collection.description) ||
       `${collection.title} products`,
     openGraph: src
       ? {
@@ -44,7 +43,7 @@ export default async function CategoryPage({
   searchParams,
 }: {
   params: { collection: string };
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const { sort } = searchParams as Record<string, string>;
   const { sortKey, reverse } =

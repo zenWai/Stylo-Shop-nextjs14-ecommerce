@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { GridTileImage } from 'components/grid/tile';
@@ -85,23 +86,23 @@ export default async function ProductPage({
 
   return (
     <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
-        }}
-        type="application/ld+json"
-      />
+      <Script id="product-schema" type="application/ld+json">
+        {JSON.stringify(productJsonLd)}
+      </Script>
+
       <div className="mx-auto max-w-screen-2xl px-4">
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8">
           <div className="h-full w-full basis-full lg:basis-4/6">
-            <Suspense>
-              <Gallery
-                images={product.images.map((image: Image) => ({
-                  src: image.url,
-                  altText: image.altText,
-                }))}
-              />
-            </Suspense>
+            {product.images ? (
+              <Suspense>
+                <Gallery
+                  images={product.images.map((image: Image) => ({
+                    src: image.url,
+                    altText: image.altText,
+                  }))}
+                />
+              </Suspense>
+            ) : null}
           </div>
 
           <div className="basis-full lg:basis-2/6">
