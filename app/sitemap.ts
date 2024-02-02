@@ -2,10 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getCollections, getPages, getProducts } from 'lib/shopify';
 import { validateEnvironmentVariables } from 'lib/utils';
 
-type Route = {
-  url: string;
-  lastModified: string;
-};
+type Route = FlatArray<Awaited<{ lastModified: string; url: string }[]>[], 1>[];
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
@@ -40,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  let fetchedRoutes: Route[] = [];
+  let fetchedRoutes: Route = [];
 
   try {
     fetchedRoutes = (
