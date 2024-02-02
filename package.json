@@ -3,7 +3,8 @@
   "scripts": {
     "build": "next build",
     "build-start": "next build && next start",
-    "dev": "next dev --turbo",
+    "dev": "next dev",
+    "dev-turbo": "next dev --turbo",
     "lint": "next lint",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write --ignore-unknown .",
