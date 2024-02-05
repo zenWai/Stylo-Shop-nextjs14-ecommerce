@@ -21,8 +21,8 @@ export default function ProductGridItems({
               fill
               label={{
                 title: product.title,
-                amount: product.priceRange.maxVariantPrice.amount,
-                currencyCode: product.priceRange.maxVariantPrice.currencyCode,
+                amount: product.priceRange.minVariantPrice.amount,
+                currencyCode: product.priceRange.minVariantPrice.currencyCode,
               }}
               sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
               src={product.featuredImage.url}

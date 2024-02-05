@@ -143,8 +143,8 @@ async function RelatedProducts({ id }: { id: string }) {
                 fill
                 label={{
                   title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
+                  amount: product.priceRange.minVariantPrice.amount,
+                  currencyCode: product.priceRange.minVariantPrice.currencyCode,
                 }}
                 loading="lazy"
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
