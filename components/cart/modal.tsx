@@ -186,7 +186,6 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                         />
                       </div>
                     ) : null}
-                    ;
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
                       <p>Shipping</p>
                       <p className="text-right">Calculated at checkout</p>
