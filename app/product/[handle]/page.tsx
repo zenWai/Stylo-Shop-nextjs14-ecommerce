@@ -60,8 +60,10 @@ export async function generateMetadata({
 
 export default async function ProductPage({
   params,
+  searchParams,
 }: {
   params: { handle: string };
+  searchParams: URLSearchParams;
 }) {
   const product = await getProduct(params.handle);
 
@@ -106,7 +108,10 @@ export default async function ProductPage({
           </div>
 
           <div className="basis-full lg:basis-2/6">
-            <ProductDescription product={product} />
+            <ProductDescription
+              product={product}
+              searchParamsProductPage={searchParams}
+            />
           </div>
         </div>
         <RelatedProducts id={product.id} />
@@ -138,8 +143,8 @@ async function RelatedProducts({ id }: { id: string }) {
                 fill
                 label={{
                   title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
+                  amount: product.priceRange.minVariantPrice.amount,
+                  currencyCode: product.priceRange.minVariantPrice.currencyCode,
                 }}
                 loading="lazy"
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"

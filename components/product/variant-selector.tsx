@@ -14,33 +14,31 @@ type Combination = {
 export function VariantSelector({
   options,
   variants,
+  cachedCombinations,
 }: {
   options: ProductOption[];
   variants: ProductVariant[];
+  cachedCombinations: Combination[];
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const hasNoOptionsOrJustOneOption =
-    !options.length ||
-    (options.length === 1 && options[0]?.values.length === 1);
 
-  if (hasNoOptionsOrJustOneOption) {
-    return null;
-  }
+  if (!variants.length) return null;
 
-  const combinations: Combination[] = variants.map((variant) => ({
-    id: variant.id,
-    availableForSale: variant.availableForSale,
-    // Adds key / value pairs for each variant (ie. "color": "Black" and "size": 'M").
-    ...variant.selectedOptions.reduce(
-      (accumulator, option) => ({
-        ...accumulator,
-        [option.name.toLowerCase()]: option.value,
-      }),
-      {},
-    ),
-  }));
+  const handleOptionClick = (optionName: string, value: string) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+
+    if (newSearchParams.get(optionName) === value) {
+      // If the option is already selected, remove it
+      newSearchParams.delete(optionName);
+    } else {
+      newSearchParams.set(optionName, value);
+    }
+
+    const newUrl = createUrl(pathname, newSearchParams);
+    router.replace(newUrl, { scroll: false });
+  };
 
   return options.map((option) => (
     <dl className="mb-8" key={option.id}>
@@ -57,7 +55,6 @@ export function VariantSelector({
           // Update the option params using the current option to reflect how the url *would* change,
           // if the option was clicked.
           optionSearchParams.set(optionNameLowerCase, value);
-          const optionUrl = createUrl(pathname, optionSearchParams);
 
           // In order to determine if an option is available for sale, we need to:
           //
@@ -68,6 +65,10 @@ export function VariantSelector({
           // This is the "magic" that will cross check possible variant combinations and preemptively
           // disable combinations that are not available. For example, if the color gray is only available in size medium,
           // then all other sizes should be disabled.
+          /* # TODO: Think about improving filtered and isAvailableForSale, maybe
+           *     Since we updating isAvailableForSale according to currently selected options...
+           *     Seems unnecessary tho,
+           *     after cachedCombinations, selecting different options and price updates are fast enough */
           const filtered = Array.from(optionSearchParams.entries()).filter(
             ([key, value]) =>
               options.find(
@@ -76,7 +77,8 @@ export function VariantSelector({
                   option.values.includes(value),
               ),
           );
-          const isAvailableForSale = combinations.find((combination) =>
+
+          const isAvailableForSale = cachedCombinations.find((combination) =>
             filtered.every(
               ([key, value]) =>
                 combination[key] === value && combination.availableForSale,
@@ -102,7 +104,7 @@ export function VariantSelector({
               disabled={!isAvailableForSale}
               key={value}
               onClick={() => {
-                router.replace(optionUrl, { scroll: false });
+                handleOptionClick(optionNameLowerCase, value);
               }}
               title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
               type="button"
