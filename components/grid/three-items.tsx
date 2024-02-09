@@ -30,8 +30,8 @@ function ThreeItemGridItem({
           label={{
             position: size === 'full' ? 'center' : 'bottom',
             title: item.title,
-            amount: item.priceRange.maxVariantPrice.amount,
-            currencyCode: item.priceRange.maxVariantPrice.currencyCode,
+            amount: item.priceRange.minVariantPrice.amount,
+            currencyCode: item.priceRange.minVariantPrice.currencyCode,
           }}
           loading="lazy"
           priority={priority}
@@ -61,7 +61,7 @@ export async function ThreeItemGrid({ collection }: { collection: string }) {
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 py-2 md:grid-cols-6 md:grid-rows-2">
       <ThreeItemGridItem item={firstProduct} priority={false} size="full" />
       <ThreeItemGridItem item={secondProduct} priority={false} size="half" />
-      <ThreeItemGridItem item={thirdProduct} size="half" />
+      <ThreeItemGridItem item={thirdProduct} priority={false} size="half" />
     </section>
   );
 }
