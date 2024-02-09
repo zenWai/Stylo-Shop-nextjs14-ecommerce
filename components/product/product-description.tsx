@@ -1,62 +1,165 @@
+import { default as NextDynamic } from 'next/dynamic';
 import { Suspense } from 'react';
-import { productDisplayPrice } from '@/components/product/product-display-price';
-import { getCachecombinations } from '@/components/product/product-cached-functions';
+import { SkeletonVariantSelector } from '@/components/skeletons/variant-selector';
+import {
+  getCachecombinations,
+  getCachedVariantsHashTable,
+} from '@/components/product/product-cached-functions';
 import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
 import Prose from 'components/prose';
-import type { Product } from 'lib/shopify/types';
-import { VariantSelector } from './variant-selector';
+import type { Money, ProductOption, ProductVariant } from 'lib/shopify/types';
+
+const VariantSelector = NextDynamic(
+  () => import('./variant-selector').then((mod) => mod.VariantSelector),
+  { ssr: false, loading: () => <SkeletonVariantSelector /> },
+);
+
+function getValidOptionNames(options: ProductOption[]): string[] {
+  return options.map((option) => option.name.toLowerCase());
+}
+
+function areValidOptionsPresentInSearchParams(
+  searchParams: URLSearchParams,
+  options: ProductOption[],
+): boolean {
+  const validOptionNames = getValidOptionNames(options);
+  const searchParamKeys = Object.keys(searchParams);
+  return validOptionNames.every((name) =>
+    searchParamKeys.includes(name.toLowerCase()),
+  );
+}
+
+/**
+ * Generates a search key from URL search parameters and product options.
+ * Filters the parameters to include only valid product options
+ * and creates a sorted, lowercased string key.
+ */
+function generateSearchKey(
+  searchParamsProductPage: URLSearchParams,
+  options: ProductOption[],
+): string {
+  const validOptionNames = getValidOptionNames(options);
+  return Object.entries(searchParamsProductPage)
+    .filter(([key]) => validOptionNames.includes(key.toLowerCase()))
+    .map(([key, value]) => {
+      // Handle the case where in a near future value is an array
+      const valueStr = Array.isArray(value)
+        ? value.join(',')
+        : (value as string);
+      return `${key}:${valueStr}`;
+    })
+    .sort()
+    .join(';')
+    .toLowerCase();
+}
+
+/**
+ * Calculates the display price for a product based on the provided search parameters.
+ * If all variants have the same price or if the search parameters do not match valid product options,
+ * it returns the minimum variant price. Otherwise, it finds the matching variant based on the search parameters
+ * and returns its price.
+ */
+async function productDisplayPrice(
+  productMinPrice: Money,
+  productMaxPrice: Money,
+  productOptions: ProductOption[],
+  searchParamsProductPage: URLSearchParams,
+  searchKey: string,
+  variantsHashTable: Record<string, ProductVariant>,
+) {
+  /* if all variants have the same price or if search parameters are not valid. */
+  if (
+    productMinPrice.amount === productMaxPrice.amount ||
+    !areValidOptionsPresentInSearchParams(
+      searchParamsProductPage,
+      productOptions,
+    )
+  ) {
+    return productMinPrice;
+  }
+
+  const matchingVariant = variantsHashTable[searchKey];
+
+  return matchingVariant?.availableForSale
+    ? matchingVariant.price
+    : productMinPrice;
+}
 
 export async function ProductDescription({
-  product,
+  productAvailableForSale,
+  productDescriptionHtml,
+  productMaxPrice,
+  productMinPrice,
+  productOptions,
+  productTitle,
+  productVariants,
   searchParamsProductPage,
 }: {
-  product: Product;
+  productAvailableForSale: boolean;
+  productDescriptionHtml: string;
+  productMaxPrice: Money;
+  productMinPrice: Money;
+  productOptions: ProductOption[];
+  productTitle: string;
+  productVariants: ProductVariant[];
   searchParamsProductPage: URLSearchParams;
 }) {
   const hasNoOptionsOrJustOneOption =
-    !product.options.length ||
-    (product.options.length === 1 && product.options[0]?.values.length === 1);
+    !productOptions.length ||
+    (productOptions.length === 1 && productOptions[0]?.values.length === 1);
 
-  const displayPrice = await productDisplayPrice(
-    product,
-    searchParamsProductPage,
-  );
+  let availableForSale, displayPrice, cachedCombinations;
+  // if product has options we need to find display price and handle availableForSale of chosen options
+  if (!hasNoOptionsOrJustOneOption) {
+    cachedCombinations = await getCachecombinations(productVariants);
+    // variants hash table for fast lookup
+    const variantsHashTable = await getCachedVariantsHashTable(productVariants);
+    const searchKey = generateSearchKey(
+      searchParamsProductPage,
+      productOptions,
+    );
 
-  const cachedCombinations = hasNoOptionsOrJustOneOption
-    ? []
-    : await getCachecombinations(product.variants);
+    displayPrice = await productDisplayPrice(
+      productMinPrice,
+      productMaxPrice,
+      productOptions,
+      searchParamsProductPage,
+      searchKey,
+      variantsHashTable,
+    );
+    availableForSale = variantsHashTable[searchKey]?.availableForSale;
+  }
 
+  availableForSale ??= productAvailableForSale; // availableForSale of the variant, else, availableForSale of the product
+  displayPrice ??= productMinPrice; // price of the variant, else, minimum price of the product
   return (
     <>
       <div className="mb-6 flex flex-col border-b pb-6">
-        <h1 className="mb-2 text-5xl font-medium">{product.title}</h1>
-        <div className="mr-auto w-auto rounded-full bg-coralPink p-2 text-sm text-white">
+        <h1 className="mb-2 text-5xl font-medium">{productTitle}</h1>
+        <div className="mr-auto w-auto rounded-full bg-coralPink p-2 text-sm text-black">
           <Price
             amount={displayPrice.amount}
             currencyCode={displayPrice.currencyCode}
           />
         </div>
       </div>
-      <Suspense>
-        {!hasNoOptionsOrJustOneOption ? (
-          <VariantSelector
-            cachedCombinations={cachedCombinations}
-            options={product.options}
-            variants={product.variants}
-          />
-        ) : null}
-      </Suspense>
-      {product.descriptionHtml ? (
+      {!hasNoOptionsOrJustOneOption ? (
+        <VariantSelector
+          cachedCombinations={cachedCombinations}
+          options={productOptions}
+        />
+      ) : null}
+      {productDescriptionHtml ? (
         <Prose
           className="mb-6 text-sm leading-tight"
-          html={product.descriptionHtml}
+          html={productDescriptionHtml}
         />
       ) : null}
       <Suspense>
         <AddToCart
-          availableForSale={product.availableForSale}
-          variants={product.variants}
+          availableForSale={availableForSale}
+          variants={productVariants}
         />
       </Suspense>
     </>

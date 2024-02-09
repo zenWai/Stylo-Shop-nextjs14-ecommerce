@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
+import { default as NextDynamic } from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import { Suspense } from 'react';
-import Link from 'next/link';
-import { GridTileImage } from 'components/grid/tile';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
-import { getProduct, getProductRecommendations } from 'lib/shopify';
+import { getProduct } from 'lib/shopify';
 import type { Image } from 'lib/shopify/types';
 
+const RelatedProducts = NextDynamic(() =>
+  import('@/components/related-products').then((mod) => mod.RelatedProducts),
+);
 export const runtime = 'edge';
 
 export async function generateMetadata({
@@ -96,20 +97,24 @@ export default async function ProductPage({
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8">
           <div className="h-full w-full basis-full lg:basis-4/6">
             {product.images ? (
-              <Suspense>
-                <Gallery
-                  images={product.images.map((image: Image) => ({
-                    src: image.url,
-                    altText: image.altText,
-                  }))}
-                />
-              </Suspense>
+              <Gallery
+                images={product.images.map((image: Image) => ({
+                  src: image.url,
+                  altText: image.altText,
+                }))}
+              />
             ) : null}
           </div>
 
           <div className="basis-full lg:basis-2/6">
             <ProductDescription
-              product={product}
+              productAvailableForSale={product.availableForSale}
+              productDescriptionHtml={product.descriptionHtml}
+              productMaxPrice={product.priceRange.maxVariantPrice}
+              productMinPrice={product.priceRange.minVariantPrice}
+              productOptions={product.options}
+              productTitle={product.title}
+              productVariants={product.variants}
               searchParamsProductPage={searchParams}
             />
           </div>
@@ -117,43 +122,5 @@ export default async function ProductPage({
         <RelatedProducts id={product.id} />
       </div>
     </>
-  );
-}
-
-async function RelatedProducts({ id }: { id: string }) {
-  const relatedProducts = await getProductRecommendations(id);
-
-  if (!relatedProducts.length) return null;
-
-  return (
-    <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-        {relatedProducts.map((product) => (
-          <li
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
-            key={product.handle}
-          >
-            <Link
-              className="relative h-full w-full"
-              href={`/product/${product.handle}`}
-            >
-              <GridTileImage
-                alt={product.title}
-                fill
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.minVariantPrice.amount,
-                  currencyCode: product.priceRange.minVariantPrice.currencyCode,
-                }}
-                loading="lazy"
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                src={product.featuredImage.url}
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }
