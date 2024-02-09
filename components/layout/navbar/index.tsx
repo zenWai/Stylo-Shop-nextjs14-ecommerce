@@ -1,13 +1,24 @@
-import { Suspense } from 'react';
+import { default as NextDynamic } from 'next/dynamic';
 import Link from 'next/link';
+import SkeletonMobileMenu from '@/components/skeletons/mobile-menu';
 import SkeletonSearchInput from '@/components/skeletons/search-input';
-import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
 import LogoSquare from 'components/logo-square';
 import { getMenu } from 'lib/shopify';
 import type { Menu } from 'lib/shopify/types';
-import MobileMenu from './mobile-menu';
-import Search from './search';
+
+const MobileMenu = NextDynamic(() => import('./mobile-menu'), {
+  ssr: false,
+  loading: () => <SkeletonMobileMenu />,
+});
+const Search = NextDynamic(() => import('./search'), {
+  ssr: false,
+  loading: () => <SkeletonSearchInput />,
+});
+const Cart = NextDynamic(() => import('../../cart'), {
+  ssr: false,
+  loading: () => <OpenCart />,
+});
 
 const { SITE_NAME } = process.env;
 
@@ -18,9 +29,7 @@ export async function Navbar() {
     <header className="sticky top-0 z-50">
       <nav className="relative flex items-center justify-between bg-customBeige p-4 shadow-md lg:px-6">
         <div className="block flex-none md:hidden">
-          <Suspense>
-            <MobileMenu menu={menu} />
-          </Suspense>
+          <MobileMenu menu={menu} />
         </div>
         <div className="flex w-full items-center">
           <div className="flex w-full md:w-1/3">
@@ -49,14 +58,10 @@ export async function Navbar() {
             ) : null}
           </div>
           <div className="hidden justify-center md:flex md:w-1/3">
-            <Suspense fallback={<SkeletonSearchInput />}>
-              <Search />
-            </Suspense>
+            <Search />
           </div>
           <div className="flex justify-end md:w-1/3">
-            <Suspense fallback={<OpenCart />}>
-              <Cart />
-            </Suspense>
+            <Cart />
           </div>
         </div>
       </nav>

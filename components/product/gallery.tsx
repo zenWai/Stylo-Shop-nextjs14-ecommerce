@@ -1,11 +1,18 @@
 'use client';
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { default as NextDynamic } from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { createUrl } from 'lib/utils';
-import { GridTileImage } from 'components/grid/tile';
+
+const GridTileImage = NextDynamic(
+  () => import('components/grid/tile').then((mod) => mod.GridTileImage),
+  {
+    ssr: false,
+  },
+);
 
 export function Gallery({
   images,
