@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { ProductOption, ProductVariant } from 'lib/shopify/types';
+import type { ProductOption } from 'lib/shopify/types';
 import { createUrl } from 'lib/utils';
 
 type Combination = {
@@ -11,20 +11,16 @@ type Combination = {
   [key: string]: string | boolean; // ie. { color: 'Red', size: 'Large', ... }
 };
 
-export function VariantSelector({
+export default function VariantSelector({
   options,
-  variants,
   cachedCombinations,
 }: {
   options: ProductOption[];
-  variants: ProductVariant[];
-  cachedCombinations: Combination[];
+  cachedCombinations: Combination[] | undefined;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  if (!variants.length) return null;
 
   const handleOptionClick = (optionName: string, value: string) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -78,7 +74,7 @@ export function VariantSelector({
               ),
           );
 
-          const isAvailableForSale = cachedCombinations.find((combination) =>
+          const isAvailableForSale = cachedCombinations?.find((combination) =>
             filtered.every(
               ([key, value]) =>
                 combination[key] === value && combination.availableForSale,

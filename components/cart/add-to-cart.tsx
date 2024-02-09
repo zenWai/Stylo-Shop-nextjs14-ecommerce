@@ -13,7 +13,7 @@ function SubmitButton({
   availableForSale,
   selectedVariantId,
 }: {
-  availableForSale: boolean;
+  availableForSale: boolean | undefined;
   selectedVariantId: string | undefined;
 }) {
   const { pending } = useFormStatus();
@@ -79,7 +79,7 @@ export function AddToCart({
   availableForSale,
 }: {
   variants: ProductVariant[];
-  availableForSale: boolean;
+  availableForSale: boolean | undefined;
 }) {
   const [message, formAction] = useFormState(addItem, null);
   const searchParams = useSearchParams();

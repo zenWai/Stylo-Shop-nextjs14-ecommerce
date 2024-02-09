@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const nextConfig = {
   eslint: {
     // Disabling on production builds because we're running checks on PRs via GitHub Actions.
     ignoreDuringBuilds: true,
@@ -29,3 +33,5 @@ module.exports = {
     ];
   },
 };
+
+module.exports = withBundleAnalyzer(nextConfig);

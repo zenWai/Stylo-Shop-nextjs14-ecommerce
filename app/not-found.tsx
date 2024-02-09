@@ -12,11 +12,11 @@ export default function NotFound() {
         <div className="text-center">
           {/* Image */}
           <div className="relative inline-block animate-bounceUp">
-            <Image alt="Stylo Jewels Logo" src={shopLogo} />
+            <Image alt="Stylo Jewels Logo" priority src={shopLogo} />
           </div>
           {/* Text */}
           <div className="mt-4 tracking-widest">
-            <span className="text-xl text-gray-500">
+            <span className="text-xl text-black">
               Sorry, We couldn&apos;t find what you are looking for!
             </span>
           </div>
