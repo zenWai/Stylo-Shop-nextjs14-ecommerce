@@ -11,7 +11,7 @@ type Combination = {
   [key: string]: string | boolean; // ie. { color: 'Red', size: 'Large', ... }
 };
 
-export function VariantSelector({
+export default function VariantSelector({
   options,
   cachedCombinations,
 }: {

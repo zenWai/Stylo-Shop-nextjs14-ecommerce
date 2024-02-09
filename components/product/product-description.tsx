@@ -10,10 +10,10 @@ import Price from 'components/price';
 import Prose from 'components/prose';
 import type { Money, ProductOption, ProductVariant } from 'lib/shopify/types';
 
-const VariantSelector = NextDynamic(
-  () => import('./variant-selector').then((mod) => mod.VariantSelector),
-  { ssr: false, loading: () => <SkeletonVariantSelector /> },
-);
+const VariantSelector = NextDynamic(() => import('./variant-selector'), {
+  ssr: false,
+  loading: () => <SkeletonVariantSelector />,
+});
 
 function getValidOptionNames(options: ProductOption[]): string[] {
   return options.map((option) => option.name.toLowerCase());
