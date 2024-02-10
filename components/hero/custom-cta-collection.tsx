@@ -1,33 +1,42 @@
 import Link from 'next/link';
 import { getCollectionProducts } from '@/lib/shopify';
 import { GridTileImage } from '@/components/grid/tile';
-import type { Product } from '@/lib/shopify/types';
+import type { Money } from '@/lib/shopify/types';
 import CustomButtonLink from '@/components/hero/custom-button-link';
 
 function SingleCtaItem({
-  product,
+  productFeaturedImageUrl,
+  productHandle,
+  productPriceRange,
+  productTitle,
   sale,
 }: {
-  product: Product;
+  productFeaturedImageUrl: string;
+  productHandle: string;
+  productPriceRange: {
+    minVariantPrice: Money;
+    maxVariantPrice: Money;
+  };
+  productTitle: string;
   sale?: boolean;
 }) {
   return (
     <Link
       className="relative block aspect-square h-full w-full"
-      href={`/product/${product.handle}`}
+      href={`/product/${productHandle}`}
     >
       <GridTileImage
-        alt={product.title}
+        alt={productTitle}
         fill
         label={{
           position: 'bottom',
-          title: product.title,
-          amount: product.priceRange.minVariantPrice.amount,
-          currencyCode: product.priceRange.minVariantPrice.currencyCode,
+          title: productTitle,
+          amount: productPriceRange.minVariantPrice.amount,
+          currencyCode: productPriceRange.minVariantPrice.currencyCode,
         }}
         loading="lazy"
         sizes="(min-width: 768px) 33vw, 100vw"
-        src={product.featuredImage.url}
+        src={productFeaturedImageUrl}
       />
       {/* Sale label */}
       {sale ? (
@@ -72,10 +81,6 @@ export async function CustomCtaCollection({
   const products =
     limitItems > 0 ? ctaProducts.slice(0, limitItems) : ctaProducts;
 
-  const customButton = withButton ? (
-    <CustomButtonLink linkTo={buttonLinkTo} text={buttonLabel} />
-  ) : undefined;
-
   return (
     <section className="bg-white py-12 text-gray-700 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -88,10 +93,19 @@ export async function CustomCtaCollection({
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-4">
           {products.map((product) => (
-            <SingleCtaItem key={product.title} product={product} sale={sale} />
+            <SingleCtaItem
+              key={product.title}
+              productFeaturedImageUrl={product.featuredImage.url}
+              productHandle={product.handle}
+              productPriceRange={product.priceRange}
+              productTitle={product.title}
+              sale={sale}
+            />
           ))}
         </div>
-        {customButton}
+        {withButton ? (
+          <CustomButtonLink linkTo={buttonLinkTo} text={buttonLabel} />
+        ) : null}
       </div>
     </section>
   );

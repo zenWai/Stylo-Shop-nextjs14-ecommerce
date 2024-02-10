@@ -13,8 +13,7 @@ const ThreeItemGrid = NextDynamic(() =>
   import('components/grid/three-items').then((mod) => mod.ThreeItemGrid),
 );
 
-export const dynamic = 'force-static';
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`

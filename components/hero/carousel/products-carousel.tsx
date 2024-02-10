@@ -1,5 +1,4 @@
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
 import 'swiper/css';
 import './swiper.css';
@@ -22,5 +21,12 @@ export default async function ProductsCarousel({
   const products = await getCollectionProducts({
     collection,
   });
-  return <SwiperComponent products={products} />;
+  const simplifiedProducts = products.map((product) => ({
+    handle: product.handle,
+    title: product.title,
+    priceRange: product.priceRange,
+    imageUrl: product.featuredImage.url,
+  }));
+
+  return <SwiperComponent products={simplifiedProducts} />;
 }
