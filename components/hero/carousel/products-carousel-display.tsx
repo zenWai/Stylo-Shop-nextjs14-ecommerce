@@ -9,13 +9,18 @@ import {
   FreeMode,
 } from 'swiper/modules';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
-import type { Product } from '@/lib/shopify/types';
+import type { Money } from '@/lib/shopify/types';
 import { GridTileImage } from '@/components/grid/tile';
 
 export default function ProductsCarouselDisplay({
   products,
 }: {
-  products: Product[];
+  products: {
+    handle: string;
+    title: string;
+    imageUrl: string;
+    priceRange: { minVariantPrice: Money; maxVariantPrice: Money };
+  }[];
 }) {
   return (
     <section className="py-4">
@@ -69,7 +74,7 @@ export default function ProductsCarouselDisplay({
                   }}
                   loading="lazy"
                   sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                  src={product.featuredImage.url}
+                  src={product.imageUrl}
                 />
               </Link>
             </div>
