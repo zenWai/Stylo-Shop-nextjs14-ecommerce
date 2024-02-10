@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { default as NextDynamic } from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
+import Breadcrumbs from '@/components/breadcumbs/breadcumbs';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
@@ -59,6 +60,30 @@ export async function generateMetadata({
   };
 }
 
+function BreadCrumbsPage({
+  productHandler,
+  productTags,
+  productTitle,
+}: {
+  productHandler: string;
+  productTags: string[];
+  productTitle: string;
+}) {
+  return (
+    <Breadcrumbs
+      breadcrumbs={[
+        { label: 'Home', href: '/' },
+        ...productTags.map((tag) => ({ label: tag, href: `/search?q=${tag}` })),
+        {
+          label: productTitle,
+          href: `/product/${productHandler}/`,
+          active: true,
+        },
+      ]}
+    />
+  );
+}
+
 export default async function ProductPage({
   params,
   searchParams,
@@ -94,6 +119,11 @@ export default async function ProductPage({
       </Script>
 
       <div className="mx-auto max-w-screen-2xl px-4 py-8">
+        <BreadCrumbsPage
+          productHandler={product.handle}
+          productTags={product.tags}
+          productTitle={product.title}
+        />
         <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8">
           <div className="h-full w-full basis-full lg:basis-4/6">
             {product.images ? (
