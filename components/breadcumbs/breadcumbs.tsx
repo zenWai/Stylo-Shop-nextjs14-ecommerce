@@ -14,7 +14,7 @@ export default function Breadcrumbs({
 }) {
   return (
     <nav aria-label="Breadcrumb" className="mb-6 block">
-      <ol className="flex flex-col font-windSong text-xl md:flex-row md:text-2xl">
+      <ol className="flex flex-row flex-wrap font-windSong text-xl md:text-2xl">
         {breadcrumbs.map((breadcrumb, index) => (
           <li
             aria-current={breadcrumb.active}
