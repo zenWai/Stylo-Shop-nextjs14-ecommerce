@@ -5,7 +5,7 @@ From the various optimizations implemented throughout the development process th
 
 ## Project Highlights
 
-- Web Performance: Achieves a Lighthouse score of 100 across all metrics, a testament to our commitment to optimization and efficiency.
+- Web Performance: Achieves a Lighthouse score of 100.
 - Security: Implements critical fixes, including safeguarding against the addition of $0 products via URL manipulation and discrepancies from product page and cart prices.
  
 ## Core Technologies
