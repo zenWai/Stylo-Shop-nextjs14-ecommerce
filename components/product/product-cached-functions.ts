@@ -40,7 +40,6 @@ export const getCachecombinations = unstable_cache(
       throw error;
     }
   },
-  // #TODO: make unique to address changes on shopify backend or revalidate?
   [`product-cached-combinations-variants`],
 );
 
@@ -84,6 +83,5 @@ export const getCachedVariantsHashTable = unstable_cache(
       throw error;
     }
   },
-  // #TODO: make unique to address changes on shopify backend or revalidate?
   ['product-cached-Variant-Hash-Table'],
 );
