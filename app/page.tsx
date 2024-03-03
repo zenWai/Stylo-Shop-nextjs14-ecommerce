@@ -3,14 +3,18 @@ import Video from '../components/hero/video';
 
 const ProductsCarousel = NextDynamic(
   () => import('@/components/hero/carousel/products-carousel'),
+  { ssr: false },
 );
-const CustomCtaCollection = NextDynamic(() =>
-  import('@/components/hero/custom-cta-collection').then(
-    (mod) => mod.CustomCtaCollection,
-  ),
+const CustomCtaCollection = NextDynamic(
+  () =>
+    import('@/components/hero/custom-cta-collection').then(
+      (mod) => mod.CustomCtaCollection,
+    ),
+  { ssr: false },
 );
-const ThreeItemGrid = NextDynamic(() =>
-  import('components/grid/three-items').then((mod) => mod.ThreeItemGrid),
+const ThreeItemGrid = NextDynamic(
+  () => import('components/grid/three-items').then((mod) => mod.ThreeItemGrid),
+  { ssr: false },
 );
 
 export const runtime = 'edge';
