@@ -2,15 +2,25 @@ import type { Metadata } from 'next';
 import { default as NextDynamic } from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
-import Breadcrumbs from '@/components/breadcumbs/breadcumbs';
 import { Gallery } from 'components/product/gallery';
-import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct } from 'lib/shopify';
 import type { Image } from 'lib/shopify/types';
 
-const RelatedProducts = NextDynamic(() =>
-  import('@/components/related-products').then((mod) => mod.RelatedProducts),
+const RelatedProducts = NextDynamic(
+  () =>
+    import('@/components/related-products').then((mod) => mod.RelatedProducts),
+  { ssr: true },
+);
+
+const ProductDescription = NextDynamic(
+  () => import('@/components/product/product-description'),
+  { ssr: true },
+);
+
+const BreadCrumbsProduct = NextDynamic(
+  () => import('@/components/product/bread-crumbs-product'),
+  { ssr: true },
 );
 export const runtime = 'edge';
 
@@ -60,36 +70,10 @@ export async function generateMetadata({
   };
 }
 
-function BreadCrumbsPage({
-  productHandler,
-  productTags,
-  productTitle,
-}: {
-  productHandler: string;
-  productTags: string[];
-  productTitle: string;
-}) {
-  return (
-    <Breadcrumbs
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        ...productTags.map((tag) => ({ label: tag, href: `/search?q=${tag}` })),
-        {
-          label: productTitle,
-          href: `/product/${productHandler}/`,
-          active: true,
-        },
-      ]}
-    />
-  );
-}
-
 export default async function ProductPage({
   params,
-  searchParams,
 }: {
   params: { handle: string };
-  searchParams: URLSearchParams;
 }) {
   const product = await getProduct(params.handle);
 
@@ -114,12 +98,16 @@ export default async function ProductPage({
 
   return (
     <>
-      <Script id="product-schema" type="application/ld+json">
+      <Script
+        id="product-schema"
+        strategy="afterInteractive"
+        type="application/ld+json"
+      >
         {JSON.stringify(productJsonLd)}
       </Script>
 
       <div className="mx-auto max-w-screen-2xl px-4 py-8">
-        <BreadCrumbsPage
+        <BreadCrumbsProduct
           productHandler={product.handle}
           productTags={product.tags}
           productTitle={product.title}
@@ -138,14 +126,12 @@ export default async function ProductPage({
 
           <div className="basis-full lg:basis-2/6">
             <ProductDescription
-              productAvailableForSale={product.availableForSale}
               productDescriptionHtml={product.descriptionHtml}
               productMaxPrice={product.priceRange.maxVariantPrice}
               productMinPrice={product.priceRange.minVariantPrice}
               productOptions={product.options}
               productTitle={product.title}
               productVariants={product.variants}
-              searchParamsProductPage={searchParams}
             />
           </div>
         </div>
