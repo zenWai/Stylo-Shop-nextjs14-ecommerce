@@ -1,4 +1,3 @@
-import { SkeletonVariantSelector } from '@/components/skeletons/variant-selector';
 import { default as NextDynamic } from 'next/dynamic';
 import Price from '@/components/price';
 import {
@@ -11,8 +10,7 @@ import type { Money, ProductOption, ProductVariant } from 'lib/shopify/types';
 const VariantSelectorAndPrice = NextDynamic(
   () => import('./variant-selector-and-price'),
   {
-    ssr: false,
-    loading: () => <SkeletonVariantSelector />,
+    ssr: true,
   },
 );
 
