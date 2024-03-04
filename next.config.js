@@ -1,37 +1,49 @@
 /** @type {import('next').NextConfig} */
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
+const {
+  PHASE_PRODUCTION_BUILD,
+  PHASE_PRODUCTION_SERVER,
+} = require('next/constants');
 
-const nextConfig = {
-  eslint: {
-    // Disabling on production builds because we're running checks on PRs via GitHub Actions.
-    ignoreDuringBuilds: true,
-  },
-  logging: {
-    fetches: {
-      fullUrl: true,
+module.exports = (phase) => {
+  // Determine if the current phase is one of the production phases
+  const isProduction =
+    phase === PHASE_PRODUCTION_BUILD || phase === PHASE_PRODUCTION_SERVER;
+
+  // Conditionally set up the bundle analyzer based on the environment
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  });
+
+  const nextConfig = {
+    eslint: {
+      ignoreDuringBuilds: true,
     },
-  },
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.shopify.com',
-        pathname: '/s/files/**',
-      },
-    ],
-  },
-  async redirects() {
-    return [
-      {
-        source: '/password',
-        destination: '/',
-        permanent: true,
-      },
-    ];
-  },
-};
+    logging: isProduction
+      ? { fetches: { fullUrl: false } }
+      : { fetches: { fullUrl: true } },
+    images: {
+      formats: ['image/avif', 'image/webp'],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'cdn.shopify.com',
+          pathname: '/s/files/**',
+        },
+      ],
+    },
+    compiler: {
+      removeConsole: isProduction ? { exclude: ['error'] } : false,
+    },
+    async redirects() {
+      return [
+        {
+          source: '/password',
+          destination: '/',
+          permanent: true,
+        },
+      ];
+    },
+  };
 
-module.exports = withBundleAnalyzer(nextConfig);
+  return withBundleAnalyzer(nextConfig);
+};
