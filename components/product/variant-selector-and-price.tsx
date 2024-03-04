@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useWorker } from '@/components/product/use-worker';
+import { useWorker } from '@/components/product/worker/use-worker';
 import Price from '@/components/price';
 import {
   filterRelevantSearchParams,
@@ -36,7 +36,6 @@ export default function VariantSelectorAndPrice({
     productOptions,
   );
   const [availabilityResults, postMessage] = useWorker(
-    '/availabilityChecker.js',
     cachedConvertVariantsToCombinations,
     productOptions,
     relevantSearchParams,

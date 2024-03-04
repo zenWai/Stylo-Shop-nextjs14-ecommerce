@@ -10,7 +10,6 @@ interface WorkerMessageData {
 }
 
 export const useWorker = (
-  workerPath: string,
   cachedConvertVariantsToCombinations: VariantsToCombinations[] | undefined,
   productOptions: ProductOption[],
   relevantSearchParams: URLSearchParams,
@@ -21,6 +20,7 @@ export const useWorker = (
 
   const postMessage = useCallback(
     (updatedSearchParams: [string, string][]) => {
+      console.log('hi from postMessage worker');
       if (workerRef.current) {
         workerRef.current.postMessage({
           cachedConvertVariantsToCombinations,
@@ -33,25 +33,29 @@ export const useWorker = (
   );
 
   useEffect(() => {
-    workerRef.current = new Worker(workerPath);
+    if (typeof window !== 'undefined') {
+      workerRef.current = new Worker(
+        new URL('./availability-checker.js', import.meta.url),
+      );
+      workerRef.current.onmessage = ({
+        data,
+      }: MessageEvent<WorkerMessageData>) => {
+        setAvailabilityResults((prev) => ({
+          ...prev,
+          ...data.availabilityResults,
+        }));
+      };
 
+      // Post the initial message to the worker
+      postMessage(Array.from(relevantSearchParams.entries()));
+    }
+    console.log('hi from useEffect worker');
     // Setup an event listener for incoming messages
-    workerRef.current.onmessage = ({
-      data,
-    }: MessageEvent<WorkerMessageData>) => {
-      setAvailabilityResults((prev) => ({
-        ...prev,
-        ...data.availabilityResults,
-      }));
-    };
-
-    // Post the initial message to the worker
-    postMessage(Array.from(relevantSearchParams.entries()));
 
     return () => {
       workerRef.current?.terminate();
     };
-  }, [workerPath, cachedConvertVariantsToCombinations]);
+  }, [cachedConvertVariantsToCombinations]);
 
   return [availabilityResults, postMessage] as [
     AvailabilityResults,
