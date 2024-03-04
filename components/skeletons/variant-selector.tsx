@@ -27,15 +27,15 @@ function Spinner() {
 function ThreeDots() {
   return (
     <div className="flex h-5 items-center justify-center space-x-1">
-      <div className="h-2 w-2 animate-dotFlashing rounded-full bg-current"></div>
+      <div className="h-2 w-2 animate-dotFlashing rounded-full bg-current" />
       <div
         className="h-2 w-2 animate-dotFlashing rounded-full bg-current"
         style={{ animationDelay: '0.1s' }}
-      ></div>
+      />
       <div
         className="h-2 w-2 animate-dotFlashing rounded-full bg-current"
         style={{ animationDelay: '0.2s' }}
-      ></div>
+      />
     </div>
   );
 }
