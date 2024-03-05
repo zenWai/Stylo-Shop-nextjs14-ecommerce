@@ -11,7 +11,7 @@ const SwiperComponent = NextDynamic(
   // making it more SEO friendly.
   // ssr: false here is trading that off for
   // a faster dom content loaded and a bit faster FCP LCP specially on non-static
-  { ssr: true },
+  { ssr: false },
 );
 export default async function ProductsCarousel({
   collection,

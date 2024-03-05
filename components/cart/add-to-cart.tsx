@@ -5,9 +5,10 @@ import clsx from 'clsx';
 import React from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
+import { generateSearchKey } from '@/components/product/product-utils';
 import { addItem } from 'components/cart/actions';
 import LoadingDots from 'components/loading-dots';
-import type { ProductVariant } from 'lib/shopify/types';
+import type { ProductOption, ProductVariant } from 'lib/shopify/types';
 
 function SubmitButton({
   availableForSale,
@@ -74,22 +75,28 @@ function SubmitButton({
   );
 }
 
-export function AddToCart({
+export default function AddToCart({
+  variantsHashTable,
+  productOptions,
   variants,
-  availableForSale,
 }: {
+  variantsHashTable: Record<string, ProductVariant>;
+  productOptions: ProductOption[];
   variants: ProductVariant[];
-  availableForSale: boolean | undefined;
 }) {
   const [message, formAction] = useFormState(addItem, null);
   const searchParams = useSearchParams();
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
-  const variant = variants.find((variant: ProductVariant) =>
-    variant.selectedOptions.every(
-      (option) => option.value === searchParams.get(option.name.toLowerCase()),
-    ),
-  );
+  let searchKey, variant;
+  // When only when variant we don't need to search
+  if (!defaultVariantId) {
+    searchKey = generateSearchKey(searchParams, productOptions);
+    variant = variantsHashTable[searchKey];
+  }
+
   const selectedVariantId = variant?.id ?? defaultVariantId;
+  const availableForSale =
+    variant?.availableForSale ?? variants.some((v) => v.availableForSale);
   const actionWithVariant = formAction.bind(null, selectedVariantId);
 
   return (

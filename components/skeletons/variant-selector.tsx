@@ -24,6 +24,22 @@ function Spinner() {
   );
 }
 
+function ThreeDots() {
+  return (
+    <div className="flex h-5 items-center justify-center space-x-1">
+      <div className="h-2 w-2 animate-dotFlashing rounded-full bg-current" />
+      <div
+        className="h-2 w-2 animate-dotFlashing rounded-full bg-current"
+        style={{ animationDelay: '0.1s' }}
+      />
+      <div
+        className="h-2 w-2 animate-dotFlashing rounded-full bg-current"
+        style={{ animationDelay: '0.2s' }}
+      />
+    </div>
+  );
+}
+
 function Skeleton({ option }: { option: string }) {
   return (
     <dl className="mb-8">
@@ -53,6 +69,9 @@ function Skeleton({ option }: { option: string }) {
 export function SkeletonVariantSelector() {
   return (
     <>
+      <div className="mb-3 mr-auto w-auto rounded-full bg-coralPink p-2 px-10 text-sm text-black">
+        <ThreeDots />
+      </div>
       <Skeleton option="COLOR" />
       <Skeleton option="MATERIAL" />
       <Skeleton option="SIZE" />

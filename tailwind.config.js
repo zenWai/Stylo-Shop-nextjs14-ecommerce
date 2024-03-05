@@ -34,11 +34,16 @@ module.exports = {
           '20%': { opacity: 1 },
           '100% ': { opacity: 0.2 },
         },
+        dotFlashing: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
       },
       animation: {
         fadeIn: 'fadeIn .3s ease-in-out',
         blink: 'blink 1.4s both infinite',
         bounceUp: 'bounceUp 2.5s infinite',
+        dotFlashing: 'dotFlashing 1s infinite linear',
       },
     },
   },

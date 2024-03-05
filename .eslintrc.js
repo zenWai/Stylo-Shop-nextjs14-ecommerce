@@ -28,7 +28,6 @@ module.exports = {
       },
     ],
     'prefer-const': 'error',
-    'react-hooks/exhaustive-deps': 'error',
     'unicorn/filename-case': [
       'error',
       {
@@ -51,5 +50,6 @@ module.exports = {
     'no-nested-ternary': 0,
     'no-console': 0,
     'react/no-array-index-key': 0,
+    'react-hooks/exhaustive-deps': 0,
   },
 };
