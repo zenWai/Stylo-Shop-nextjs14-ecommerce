@@ -1,4 +1,5 @@
 import { GeistSans } from 'geist/font/sans';
+import { ViewTransitions } from 'next-view-transitions';
 import { Great_Vibes, WindSong } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { ensureStartsWith } from 'lib/utils';
@@ -61,15 +62,17 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html
-      className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}
-      lang="en"
-    >
-      <body className="bg-customBeige text-black selection:bg-teal-300">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}
+        lang="en"
+      >
+        <body className="bg-customBeige text-black selection:bg-teal-300">
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

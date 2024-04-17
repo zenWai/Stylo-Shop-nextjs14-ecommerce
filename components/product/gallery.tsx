@@ -3,7 +3,7 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { default as NextDynamic } from 'next/dynamic';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { createUrl } from 'lib/utils';
 

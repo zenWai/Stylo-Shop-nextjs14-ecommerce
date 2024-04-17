@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   Navigation,

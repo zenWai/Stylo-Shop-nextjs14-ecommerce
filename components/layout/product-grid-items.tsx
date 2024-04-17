@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import Grid from 'components/grid';
 import { GridTileImage } from 'components/grid/tile';
 import type { Product } from 'lib/shopify/types';

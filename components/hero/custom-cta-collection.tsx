@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { getCollectionProducts } from '@/lib/shopify';
 import { GridTileImage } from '@/components/grid/tile';
 import type { Money } from '@/lib/shopify/types';
