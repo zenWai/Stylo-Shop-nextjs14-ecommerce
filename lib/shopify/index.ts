@@ -171,9 +171,10 @@ const reshapeImages = (images: Connection<Image>, productTitle: string) => {
   return flattened.map((image) => {
     const match = /.*\/(?<filename>.*)\..*/.exec(image.url);
     const filename = match?.groups?.filename ? match.groups.filename : null;
+    const fallback = filename ? `${productTitle} - ${filename}` : productTitle;
     return {
       ...image,
-      altText: image.altText || `${productTitle} - ${filename}`,
+      altText: image.altText || fallback,
     };
   });
 };

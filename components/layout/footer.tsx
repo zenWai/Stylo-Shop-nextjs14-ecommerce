@@ -7,7 +7,7 @@ const { COMPANY_NAME, SITE_NAME } = process.env;
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
-  const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
+  const copyrightDate = `2023${currentYear > 2023 ? `-${currentYear.toString()}` : ''}`;
   const menu = await getMenu('next-js-frontend-footer-menu');
   const copyrightName = COMPANY_NAME ?? SITE_NAME ?? '';
 
