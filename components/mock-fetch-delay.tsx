@@ -9,7 +9,17 @@ export function mockFetchDelay<T>(
 ): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     setTimeout(() => {
-      fetchFunction().then(resolve).catch(reject);
+      fetchFunction()
+        .then(resolve)
+        .catch((error: unknown) => {
+          if (error instanceof Error) {
+            reject(error);
+          } else {
+            const errorMessage =
+              typeof error === 'string' ? error : String(error);
+            reject(new Error(`Issue with mockFetchDelay: ${errorMessage}`));
+          }
+        });
     }, delay);
   });
 }

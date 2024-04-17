@@ -29,7 +29,7 @@ export default async function SearchPage({
         <p className="mb-4">
           {products.length === 0
             ? 'There are no products that match '
-            : `Showing ${products.length} ${resultsText} for `}
+            : `Showing ${products.length.toString()} ${resultsText} for `}
           <span className="font-bold">&quot;{searchValue}&quot;</span>
         </p>
       ) : null}

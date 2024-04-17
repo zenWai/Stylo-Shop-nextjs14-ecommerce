@@ -51,5 +51,6 @@ module.exports = {
     'no-console': 0,
     'react/no-array-index-key': 0,
     'react-hooks/exhaustive-deps': 0,
+    '@typescript-eslint/prefer-nullish-coalescing': 0,
   },
 };
