@@ -1,4 +1,5 @@
-import { default as NextDynamic } from 'next/dynamic';
+import AddToCart from '@/components/cart/add-to-cart';
+import VariantSelectorAndPrice from '@/components/product/variant-selector-and-price';
 import Price from '@/components/price';
 import {
   getCachedConvertVariantsToCombinations,
@@ -6,17 +7,6 @@ import {
 } from '@/components/product/product-cached-functions';
 import Prose from 'components/prose';
 import type { Money, ProductOption, ProductVariant } from 'lib/shopify/types';
-
-const VariantSelectorAndPrice = NextDynamic(
-  () => import('./variant-selector-and-price'),
-  {
-    ssr: true,
-  },
-);
-
-const AddToCart = NextDynamic(() => import('@/components/cart/add-to-cart'), {
-  ssr: true,
-});
 
 export default async function ProductDescription({
   productDescriptionHtml,
