@@ -1,27 +1,14 @@
 import type { Metadata } from 'next';
-import { default as NextDynamic } from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
+import BreadCrumbsProduct from '@/components/product/bread-crumbs-product';
+import ProductDescription from '@/components/product/product-description';
+import { RelatedProducts } from '@/components/related-products';
 import { Gallery } from 'components/product/gallery';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct } from 'lib/shopify';
 import type { Image } from 'lib/shopify/types';
 
-const RelatedProducts = NextDynamic(
-  () =>
-    import('@/components/related-products').then((mod) => mod.RelatedProducts),
-  { ssr: true },
-);
-
-const ProductDescription = NextDynamic(
-  () => import('@/components/product/product-description'),
-  { ssr: true },
-);
-
-const BreadCrumbsProduct = NextDynamic(
-  () => import('@/components/product/bread-crumbs-product'),
-  { ssr: true },
-);
 export const runtime = 'edge';
 
 export async function generateMetadata({
