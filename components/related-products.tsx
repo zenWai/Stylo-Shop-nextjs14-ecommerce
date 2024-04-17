@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { GridTileImage } from '@/components/grid/tile';
 import { getProductRecommendations } from '@/lib/shopify';
 

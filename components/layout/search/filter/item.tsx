@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { usePathname, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import type { SortFilterItemType } from '@/lib/constants';
 import { createUrl } from 'lib/utils';
 import type { ListItemType, PathFilterItemType } from './index';

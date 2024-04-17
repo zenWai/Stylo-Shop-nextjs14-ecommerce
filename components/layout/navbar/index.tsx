@@ -1,5 +1,5 @@
 import { default as NextDynamic } from 'next/dynamic';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import SkeletonMobileMenu from '@/components/skeletons/mobile-menu';
 import SkeletonSearchInput from '@/components/skeletons/search-input';
 import OpenCart from 'components/cart/open-cart';

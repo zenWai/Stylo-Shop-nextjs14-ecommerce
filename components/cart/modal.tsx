@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Price from 'components/price';
