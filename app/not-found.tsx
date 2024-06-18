@@ -3,8 +3,6 @@ import CustomButtonLink from '@/components/hero/custom-button-link';
 import { CustomCtaCollection } from '@/components/hero/custom-cta-collection';
 import shopLogo from '@/public/logonew.png';
 
-export const runtime = 'edge';
-
 export default function NotFound() {
   return (
     <>

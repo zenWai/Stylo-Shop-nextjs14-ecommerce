@@ -32,24 +32,21 @@ export async function Navbar() {
           <MobileMenu menu={menu} />
         </div>
         <div className="flex w-full items-center">
-          <div className="flex w-full md:w-1/3">
+          <div className="flex w-full font-windSong text-black md:w-1/3">
             <Link
               className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
               href="/"
             >
               <LogoSquare />
-              <div className="ml-2 flex-none font-greatVibes text-2xl font-bold text-black md:hidden lg:block">
+              <div className="ml-2 flex-none text-2xl font-bold md:hidden lg:block">
                 {SITE_NAME}
               </div>
             </Link>
             {menu.length ? (
-              <ul className="hidden gap-6 text-sm md:flex md:items-center">
+              <ul className="hidden gap-6 text-xl underline md:flex md:items-center">
                 {menu.map((item: Menu) => (
                   <li key={item.title}>
-                    <Link
-                      className="text-black underline-offset-4 hover:text-black hover:underline"
-                      href={item.path}
-                    >
+                    <Link className="hover:text-black/50" href={item.path}>
                       {item.title}
                     </Link>
                   </li>
