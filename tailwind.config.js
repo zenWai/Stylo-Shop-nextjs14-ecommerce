@@ -8,7 +8,6 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
         windSong: ['var(--font-windSong)'],
-        greatVibes: ['var(--font-greatVibes)'],
       },
       colors: {
         customBeige: 'rgb(221, 208, 200)',

@@ -1,23 +1,7 @@
-import { default as NextDynamic } from 'next/dynamic';
+import { ThreeItemGrid } from '@/components/grid/three-items';
+import ProductsCarousel from '@/components/hero/carousel/products-carousel';
+import { CustomCtaCollection } from '@/components/hero/custom-cta-collection';
 import Video from '../components/hero/video';
-
-const ProductsCarousel = NextDynamic(
-  () => import('@/components/hero/carousel/products-carousel'),
-  { ssr: false },
-);
-const CustomCtaCollection = NextDynamic(
-  () =>
-    import('@/components/hero/custom-cta-collection').then(
-      (mod) => mod.CustomCtaCollection,
-    ),
-  { ssr: false },
-);
-const ThreeItemGrid = NextDynamic(
-  () => import('components/grid/three-items').then((mod) => mod.ThreeItemGrid),
-  { ssr: false },
-);
-
-export const runtime = 'edge';
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`

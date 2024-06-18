@@ -1,6 +1,6 @@
 import { GeistSans } from 'geist/font/sans';
 import { ViewTransitions } from 'next-view-transitions';
-import { Great_Vibes, WindSong } from 'next/font/google';
+import { WindSong } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { ensureStartsWith } from 'lib/utils';
 import { Navbar } from 'components/layout/navbar';
@@ -49,12 +49,6 @@ const windSong = WindSong({
   weight: ['500'],
   variable: '--font-windSong',
 });
-const greatVibes = Great_Vibes({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400'],
-  variable: '--font-greatVibes',
-});
 
 export default async function RootLayout({
   children,
@@ -63,10 +57,7 @@ export default async function RootLayout({
 }) {
   return (
     <ViewTransitions>
-      <html
-        className={`${GeistSans.variable} ${windSong.variable} ${greatVibes.variable}`}
-        lang="en"
-      >
+      <html className={`${GeistSans.variable} ${windSong.variable}`} lang="en">
         <body className="bg-customBeige text-black selection:bg-teal-300">
           <Navbar />
           <main>{children}</main>

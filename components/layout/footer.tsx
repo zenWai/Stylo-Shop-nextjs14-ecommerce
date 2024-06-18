@@ -17,7 +17,7 @@ export default async function Footer() {
         <div>
           <Link className="flex items-center gap-2 text-black md:pt-1" href="/">
             <LogoSquare size="sm" />
-            <span className="ml-2 flex-none font-greatVibes text-lg font-bold text-black">
+            <span className="ml-2 flex-none font-windSong text-lg font-bold text-black">
               {SITE_NAME}
             </span>
           </Link>
